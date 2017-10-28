@@ -1,53 +1,63 @@
 %Approximation of particle chain using lennard jones potential in the
 %interval 
 
-h = 1/200;
-p_0 = 2.*transpose(rand(32,1))-1;
-q_0 = rand;
-
-for i=1:31
-    q_0(i + 1) = q_0(i) + 1 - (rand/100);
-end
-
-phi_q_0 = zeros(1,32);
-
-for i = 1:32;
-    phi_q_0(i) = phi(q_0(i));
-end
-
-%p is used to store all solutions
-%p_step_new is used to calculate the solution at step n
-%p_step_old is used to load up old value
-
-%taking m = 1
-p = p_0;
-q = q_0;
-q_step_new = [];
-p_step_new = [];
-p_step_old = p_0;
-q_step_old = q_0;
-
-
-%iterate for 100 steps
-for n=1:1000
-    p_halfstep_1 = p_step_old(1)+(h/2)*(deriv_phi(q_step_old(2)-q_step_old(1)));
-    q_step_new(1) = q_step_old(1) + h*p_halfstep_1;
-    p_step_new(1) = p_halfstep_1 + (h/2)*(deriv_phi(q_step_old(2)-q_step_old(1)));
-    for i=2:31
-        p_halfstep_i = p_step_old(i)+(h/2)*(deriv_phi(q_step_old(i+1)-q_step_old(i))-deriv_phi(q_step_old(i)-q_step_old(i-1)));
-        q_step_new(i) = q_step_old(i) + h*p_halfstep_i;
-        p_step_new(i) = p_halfstep_i + (h/2)*(deriv_phi(q_step_old(i+1)-q_step_old(i))-deriv_phi(q_step_old(i)-q_step_old(i-1)));
+function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfSteps, opt)
+    if nargin < 3
+        error('too few parameters');
+    elseif nargin == 3    
+        randomInitials = randomIntializer(numberOfParticles);
+        p0 = randomInitials{1};
+        q0 = randomInitials{2};
+    else 
+        if ~isfield(opt, 'p0') | ~isfield(opt, 'p0')
+            randomInitials = randomIntializer(numberOfParticles);
+            p0 = randomInitials{1};
+            q0 = randomInitials{2};
+        else
+            p0 = opt.p0;
+            q0 = opt.q0;
+        end
+       
+    end 
+    
+    phi_q0 = zeros(1,numberOfParticles);
+    for i = 1:numberOfParticles;
+        phi_q0(i) = phi(q0(i));
     end
-    p_halfstep_32 = p_step_old(32)-(h/2)*(deriv_phi(q_step_old(32)-q_step_old(31)));
-    q_step_new(32) = q_step_old(32) + h*p_halfstep_32;
-    p_step_new(32) = p_halfstep_32-(h/2)*(deriv_phi(q_step_old(32)-q_step_old(31)));
-    p_step_old = p_step_new;
-    q_step_old = q_step_new;
-    p = [p; p_step_new];
-    q = [q; q_step_new];
-end
 
-t = linspace(0,1,1001);
-plot(t, p);
+    %p is used to store all solutions
+    %p_step_new is used to calculate the solution at step n
+    %p_step_old is used to load up old value
+
+    %taking m = 1
+    p = p0;
+    q = q0;
+    qStepNew = [];
+    pStepNew = [];
+    pStepOld = p0;
+    qStepOld = q0;
+
+
+    for n=1:numberOfSteps
+        pHalfStep1 = pStepOld(1)+(timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
+        qStepNew(1)= qStepOld(1) + timeStep*pHalfStep1;
+        pStepNew(1) = pHalfStep1 + (timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
+        for i=2:numberOfParticles-1
+            pHalfStepi = pStepOld(i)+(timeStep/2)*(deriv_phi(qStepOld(i+1)-qStepOld(i))-deriv_phi(qStepOld(i)-qStepOld(i-1)));
+            qStepNew(i) = qStepOld(i) + timeStep*pHalfStepi;
+            pStepNew(i) = pHalfStepi + (timeStep/2)*(deriv_phi(qStepOld(i+1)-qStepOld(i))-deriv_phi(qStepOld(i)-qStepOld(i-1)));
+        end
+        pHalfStepLast = pStepOld(numberOfParticles)-(timeStep/2)*(deriv_phi(qStepOld(numberOfParticles)-qStepOld(numberOfParticles-1)));
+        qStepNew(numberOfParticles) = qStepOld(numberOfParticles) + timeStep*pHalfStepLast;
+        pStepNew(numberOfParticles) = pHalfStepLast-(timeStep/2)*(deriv_phi(qStepOld(numberOfParticles)-qStepOld(numberOfParticles-1)));
+        pStepOld = pStepNew;
+        qStepOld = qStepNew;
+        p = [p; pStepNew];
+        q = [q; qStepNew];
+    end
+    answer = {p,q};
+    t = linspace(0,1,numberOfSteps+1);
+    plot(t, p);
+end 
 
 
