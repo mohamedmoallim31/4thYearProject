@@ -9,15 +9,20 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
         p0 = randomInitials{1};
         q0 = randomInitials{2};
     else 
-        if ~isfield(opt, 'p0') | ~isfield(opt, 'p0')
-            randomInitials = randomIntializer(numberOfParticles);
+        randomInitials = randomIntializer(numberOfParticles);
+        if ~isfield(opt, 'p0') && ~isfield(opt, 'p0')
             p0 = randomInitials{1};
+            q0 = randomInitials{2};
+        elseif ~isfield(opt, 'p0')
+            p0 = randomInitials{1};
+            q0 = opt.q0;
+        elseif ~isfield(opt, 'q0')
+            p0 = opt.p0;
             q0 = randomInitials{2};
         else
             p0 = opt.p0;
             q0 = opt.q0;
         end
-       
     end 
     
     phi_q0 = zeros(1,numberOfParticles);
@@ -55,9 +60,36 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
         p = [p; pStepNew];
         q = [q; qStepNew];
     end
-    answer = {p,q};
+    
     t = linspace(0,1,numberOfSteps+1);
-    plot(t, p);
+    if nargin == 3
+        answer = {p,q};
+        plot(t, p);
+    elseif nargin > 3
+        if ~isfield(opt, 'observableP') && ~isfield(opt, 'observableQ')
+            answer = {p,q};
+            plot(t, p);
+        elseif ~isfield(opt, 'observableP') && isfield(opt, 'observableQ')
+            for i = 1:numberOfSteps
+                q(i,:) = opt.observableQ(q(i,:));
+            end
+            plot(t, q);
+            answer = {p,q};
+        elseif isfield(opt, 'observableP') && ~isfield(opt, 'observableQ')
+            for i = 1:numberOfSteps
+                p(i,:) = opt.observableP(p(i,:));
+            end
+            plot(t, p); 
+            answer = {p,q};
+        elseif isfield(opt, 'observableP') && isfield(opt, 'observableQ')
+            for i = 1:numberOfSteps
+                p(i,:) = opt.observableP(p(i,:));
+                q(i,:) = opt.observableQ(q(i,:));
+            end
+            plot(t, p); 
+            answer = {p,q};
+        end 
+    end
 end 
 
 
