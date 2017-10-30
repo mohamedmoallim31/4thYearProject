@@ -35,12 +35,15 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
     %p_step_old is used to load up old value
 
     %taking m = 1
-    p = p0;
-    q = q0;
-    qStepNew = [];
-    pStepNew = [];
+    p = zeros(numberOfSteps+1, numberOfParticles);
+    q = zeros(numberOfSteps+1, numberOfParticles);
+    p(1,:) = p0;
+    q(1,:) = q0;
+    qStepNew = zeros(numberOfParticles,1);
+    pStepNew = zeros(numberOfParticles,1);
     pStepOld = p0;
     qStepOld = q0;
+    
 
 
     for n=1:numberOfSteps
@@ -57,10 +60,9 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
         pStepNew(numberOfParticles) = pHalfStepLast-(timeStep/2)*(deriv_phi(qStepOld(numberOfParticles)-qStepOld(numberOfParticles-1)));
         pStepOld = pStepNew;
         qStepOld = qStepNew;
-        p = [p; pStepNew];
-        q = [q; qStepNew];
+        p(n,:) = pStepNew;
+        q(n,:) = qStepNew;
     end
-    
     t = linspace(0,1,numberOfSteps+1);
     if nargin == 3
         answer = {p,q};
@@ -70,21 +72,21 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
             answer = {p,q};
             plot(t, p);
         elseif ~isfield(opt, 'observableP') && isfield(opt, 'observableQ')
-            for i = 1:numberOfSteps
-                q(i,:) = opt.observableQ(q(i,:));
+            for j = 1:numberOfSteps+1
+                q(j,:) = opt.observableQ(q(j,:));
             end
             plot(t, q);
             answer = {p,q};
         elseif isfield(opt, 'observableP') && ~isfield(opt, 'observableQ')
-            for i = 1:numberOfSteps
-                p(i,:) = opt.observableP(p(i,:));
+            for j = 1:numberOfSteps+1
+                p(j,:) = opt.observableP(p(j,:));
             end
             plot(t, p); 
             answer = {p,q};
         elseif isfield(opt, 'observableP') && isfield(opt, 'observableQ')
-            for i = 1:numberOfSteps
-                p(i,:) = opt.observableP(p(i,:));
-                q(i,:) = opt.observableQ(q(i,:));
+            for j = 1:numberOfSteps+1
+                p(j,:) = opt.observableP(p(j,:));
+                q(j,:) = opt.observableQ(q(j,:));
             end
             plot(t, p); 
             answer = {p,q};
