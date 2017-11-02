@@ -43,8 +43,18 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
     pStepNew = zeros(numberOfParticles,1);
     pStepOld = p0;
     qStepOld = q0;
+    
+
+
     for n=1:numberOfSteps
         pHalfStep1 = pStepOld(1)+(timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
+        pHalfStepLast = pStepOld(numberOfParticles)-(timeStep/2)*(deriv_phi(qStepOld(numberOfParticles)-qStepOld(numberOfParticles-1)));
+        
+        pHalfSteps = zeros(numberOfParticles - 2,1);
+        pHalfSteps = 
+        
+        
+        
         qStepNew(1)= qStepOld(1) + timeStep*pHalfStep1;
         pStepNew(1) = pHalfStep1 + (timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
         for i=2:numberOfParticles-1
