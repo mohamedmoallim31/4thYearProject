@@ -2,8 +2,8 @@ function C = solveForC(B, numberOfParticles, numberOfSteps, n, timestep)
 %Attempt to use method from molecular dynamics book to solve for C
 %   A = m *((d/dt)*C)
 
-
      Qu = generateQu(B, numberOfParticles);
+     Qv = eye(numberOfParticles) - generatePv(B);
      D_0 = -2*114;
      D_mod1 = 114;
      D = full(gallery('tridiag', numberOfParticles, D_mod1,D_0,D_mod1));
@@ -22,7 +22,7 @@ function C = solveForC(B, numberOfParticles, numberOfSteps, n, timestep)
          Cknext = Ck+((timestep)*Akhalfstep);
          Aknext = Ak + ((timestep/2)*(-Cknext*Qv*D));
          Ak = Aknext;
-         Ck = Aknext;
+         Ck = Cknext;
          C{k} = Ck;
          A{k} = Ak;
      end
