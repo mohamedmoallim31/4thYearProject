@@ -1,0 +1,8 @@
+function Theta = generateTheta(B, numberOfParticles, numberOfSteps, n, timestep)
+    C = solveForC(B, numberOfParticles, numberOfSteps, n, timestep);
+    Theta = cell(numberOfSteps+1);
+    for i = 1:numberOfSteps+1
+        Theta{i} = -C{i}*transpose(B);
+    end
+end
+
