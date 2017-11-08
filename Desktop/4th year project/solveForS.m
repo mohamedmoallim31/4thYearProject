@@ -1,4 +1,4 @@
-function S = solveForS(B, numberOfParticles, numberOfSteps, n, timestep)
+function S = solveForS(B, numberOfParticles, numberOfSteps, timestep)
     %Attempt to use method from molecular dynamics book to solve for C
     %   A = m *((d/dt)*C)
 
@@ -6,18 +6,19 @@ function S = solveForS(B, numberOfParticles, numberOfSteps, n, timestep)
      Qv = eye(numberOfParticles) - generatePv(B);
      D_0 = -2*114;
      D_mod1 = 114;
-     D = full(gallery('tridiag', numberOfParticles, D_mod1,D_0,D_mod1));
+     D = -full(gallery('tridiag', numberOfParticles, D_mod1,D_0,D_mod1));
      
-     A = cell(numberOfSteps+1);
-     S = cell(numberOfSteps+1);
+     A = cell(numberOfSteps,1);
+     S = cell(numberOfSteps,1);
      %set initial conditions
      Ak = -B*D*Qv;
      A{1} = Ak;
-     
-     Sk = zeros(numberOfParticles, n);
+     n = size(B);
+     n = n(1);
+     Sk = zeros(n, numberOfParticles);
      S{1} = Sk;
      
-     for k = 1:numberOfSteps
+     for k = 2:numberOfSteps
          Akhalfstep = Ak + ((timestep/2)*(-Sk*D*Qv));
          Sknext = Sk+((timestep)*Akhalfstep);
          Aknext = Ak + ((timestep/2)*(-Sknext*D*Qv));
