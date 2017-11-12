@@ -6,10 +6,6 @@ function R = generateR(B, numberOfParticles)
     D_mod1 = 72;
     D = -full(gallery('tridiag', numberOfParticles, D_mod1,D_0,D_mod1));
     transposeB = transpose(B);
-    matrix = B*(D\transposeB);
-    if det(matrix) == 0
-        error('cannot use the current B matrix for an approximation');
-    else
-        R = D\(transposeB/matrix);
-    end
+    matrix = B*(D^-1)*transposeB;
+    R = D\(transposeB/matrix);
 end
