@@ -1,7 +1,6 @@
 %commute first term
 
-function firstTerm = generateFirstTermFrom26(B, q, numberOfParticles)
-    R = generateR(B, numberOfParticles);
+function firstTerm = generateFirstTermFrom26(B, R, q, numberOfParticles);
     v = R*transpose(q);
     a = zeros(numberOfParticles, 1);
     a(1) = deriv_phi(v(2) - v(1));

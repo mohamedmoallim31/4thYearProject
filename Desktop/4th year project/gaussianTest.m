@@ -31,10 +31,14 @@ for j = 1:numberOfSteps
     deriv(j,:) = (1/timeStep)*(v(j+1,:)-v(j,:));
 end
 
+R = generateR(B, numberOfParticles);
 test = zeros(1, 4);
 for k = 1:numberOfSteps
-    firstTerm = generateFirstTermFrom26(B, q(k,:), numberOfParticles);
+    firstTerm = generateFirstTermFrom26(B, R, q(k,:), numberOfParticles);
     test(k,:) = transpose(firstTerm - M*B*transpose(deriv(k,:)));
 end
+
+
+plot(t, test);
 
 
