@@ -31,10 +31,10 @@ for j = 1:numberOfSteps
     deriv(j,:) = (1/timeStep)*(v(j+1,:)-v(j,:));
 end
 
-test = zeros(1, 3);
+test = zeros(1, 4);
 for k = 1:numberOfSteps
-    firstTerm = generateFirstTermFrom26(B, q(k,:), 4);
-    test(k,:) = firstTerm - M*B*deriv(k,:);
+    firstTerm = generateFirstTermFrom26(B, q(k,:), numberOfParticles);
+    test(k,:) = transpose(firstTerm - M*B*transpose(deriv(k,:)));
 end
 
 
