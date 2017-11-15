@@ -3,7 +3,7 @@
 function initial = randomIntializer(numberOfParticles)
     p0 = 2.*transpose(rand(numberOfParticles,1))-1;
     meanOfp0 = mean(p0);
-    p0 = p0 - meanOfp0;
+    p0 = p0. - mean;
     q0 = rand;
 
     for i=1:numberOfParticles-1

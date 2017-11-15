@@ -1,9 +1,11 @@
 numberOfParticles = 8;
-numberOfSteps = 200;
-timeStep = 1/200;
-t = linspace(0,1,200);
+numberOfSteps = 100000;
+timeStep = 1/numberOfSteps;
+t = linspace(0,1,numberOfSteps);
+B = [1,0,0,0,0,0,0,0; 0,0,0,0,0,0,0,1];
+sizeB = size(B);
+numberOfCoarseGrainParticles = sizeB(1);
 
-B = [1,0,0,0,0,0,0,0; 0,0,0,0,1,0,0,0; 0,0,0,0,0,0,0,1; 0,1,0,0,0,0,0,0];
 initial = randomIntializer(numberOfParticles);
 v0 = initial{1};
 u0 = initial{2};
@@ -17,8 +19,8 @@ v = fullTrajectory{1};
 u = fullTrajectory{2};
 
 M = (B*transpose(B))^(-1);
-p = zeros(numberOfSteps+1, 4);
-q = zeros(numberOfSteps+1, 4);
+p = zeros(numberOfSteps+1, numberOfCoarseGrainParticles);
+q = zeros(numberOfSteps+1, numberOfCoarseGrainParticles);
 for i = 1:numberOfSteps+1
     p(i,:) = B*transpose(v(i,:));
     q(i,:) = B*transpose(u(i,:));
@@ -32,13 +34,12 @@ for j = 1:numberOfSteps
 end
 
 R = generateR(B, numberOfParticles);
-test = zeros(1, 4);
+test = zeros(1, numberOfCoarseGrainParticles);
 for k = 1:numberOfSteps
-    firstTerm = generateFirstTermFrom26(B, R, q(k,:), numberOfParticles);
+    firstTerm = generateFirstTermFrom26(R, q(k,:), numberOfParticles);
     test(k,:) = transpose(firstTerm - M*B*transpose(deriv(k,:)));
 end
 
-
-plot(t, test);
+histogram(test(1000:end, :), 70);
 
 

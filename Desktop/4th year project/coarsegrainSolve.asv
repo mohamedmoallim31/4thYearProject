@@ -1,0 +1,22 @@
+function solution = coarsegrainSolve(B, R, p0, q0, numberOfParticles, memoryKernel, stepSize, numberOfSteps)
+    
+    M = (B*transpose(B))^-1;
+    p = zeros(numberOfSteps+1, numberOfParticles);
+    q = zeros(numberOfSteps+1, numberOfParticles);
+    
+    qStepNew = zeros(numberOfParticles,1);
+    pStepNew = zeros(numberOfParticles,1);
+    pHalfStep = zeros(numberOfParticles,1);
+    pStepOld = p0;
+    qStepOld = q0;
+    for n=1:numberOfSteps
+        firstTerm = generateFirstTermFrom26(R, qStepOld, numberOfParticles);
+        t = n*stepSize;
+        secondTerm  = generateTerm2Of26(memoryKernel, pStepOld, stepSize, t);
+        PHalfStep = pStepOld + (stepSize/2)*(M/(firsTerm -secondTerm));
+        
+        qStep
+    end
+
+end
+
