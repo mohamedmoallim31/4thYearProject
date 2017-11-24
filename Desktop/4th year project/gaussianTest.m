@@ -1,6 +1,6 @@
 numberOfParticles = 8;
 numberOfSteps = 100000;
-timeStep = 1/numberOfSteps;
+timeStep = 1/1000;
 t = linspace(0,1,numberOfSteps);
 B = [1,0,0,0,0,0,0,0; 0,0,0,0,0,0,0,1];
 sizeB = size(B);
