@@ -1,6 +1,6 @@
 %File will save intitial solution to xsl spreadsheet 
 numberOfParticles = 8;
-numberOfSteps = 20;
+numberOfSteps = 1e20;
 timeStep = 1/200;
 
 p = particleChainSimulation(timeStep, numberOfParticles, numberOfSteps);
