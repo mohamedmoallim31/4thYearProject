@@ -1,0 +1,14 @@
+function F = generateF(B, numberOfParticles, numberOfSteps, timeStep, q0)
+    
+    eqP = zeros(numberOfParticles,1);
+    
+    eqQ = zeros(numberOfParticles,1);
+    eqQ(1) = q0(1);
+    for i = 2:numberOfParticles
+        eqQ(i) = eqQ(i)+1;
+    end
+    
+    C = solveForC(B, numberOfParticles, numberOfSteps, timeStep);
+    S = solveForS(B, numberOfParticles, numberOfSteps, timeStep);
+end
+

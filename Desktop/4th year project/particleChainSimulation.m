@@ -41,20 +41,30 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
     q(1,:) = q0;
     qStepNew = zeros(numberOfParticles,1);
     pStepNew = zeros(numberOfParticles,1);
+    pHalfStep = zeros(numberOfParticles,1);
     pStepOld = p0;
     qStepOld = q0;
-    for n=1:numberOfSteps+1
-        pHalfStep1 = pStepOld(1)+(timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
-        qStepNew(1)= qStepOld(1) + timeStep*pHalfStep1;
-        pStepNew(1) = pHalfStep1 + (timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
+    for n=1:numberOfSteps+1        
+        pHalfStep(1) = pStepOld(1)+(timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
         for i=2:numberOfParticles-1
-            pHalfStepi = pStepOld(i)+(timeStep/2)*(deriv_phi(qStepOld(i+1)-qStepOld(i))-deriv_phi(qStepOld(i)-qStepOld(i-1)));
-            qStepNew(i) = qStepOld(i) + timeStep*pHalfStepi;
-            pStepNew(i) = pHalfStepi + (timeStep/2)*(deriv_phi(qStepOld(i+1)-qStepOld(i))-deriv_phi(qStepOld(i)-qStepOld(i-1)));
+            pHalfStep(i) = pStepOld(i)+(timeStep/2)*(deriv_phi(qStepOld(i+1)-qStepOld(i))-deriv_phi(qStepOld(i)-qStepOld(i-1)));
         end
-        pHalfStepLast = pStepOld(numberOfParticles)-(timeStep/2)*(deriv_phi(qStepOld(numberOfParticles)-qStepOld(numberOfParticles-1)));
-        qStepNew(numberOfParticles) = qStepOld(numberOfParticles) + timeStep*pHalfStepLast;
-        pStepNew(numberOfParticles) = pHalfStepLast-(timeStep/2)*(deriv_phi(qStepOld(numberOfParticles)-qStepOld(numberOfParticles-1)));
+        pHalfStep(numberOfParticles) = pStepOld(numberOfParticles)-(timeStep/2)*(deriv_phi(qStepOld(numberOfParticles)-qStepOld(numberOfParticles-1)));
+
+        
+        qStepNew(1)= qStepOld(1) + timeStep*pHalfStep(1);
+        for i=2:numberOfParticles-1
+            qStepNew(i) = qStepOld(i) + timeStep*pHalfStep(i);
+        end
+        qStepNew(numberOfParticles) = qStepOld(numberOfParticles) + timeStep*pHalfStep(numberOfParticles);
+        
+                
+        pStepNew(1) = pHalfStep(1) + (timeStep/2)*(deriv_phi(qStepNew(2)-qStepNew(1)));
+        for i=2:numberOfParticles-1
+            pStepNew(i) = pHalfStep(i) + (timeStep/2)*(deriv_phi(qStepNew(i+1)-qStepNew(i))-deriv_phi(qStepNew(i)-qStepNew(i-1)));
+        end
+        pStepNew(numberOfParticles) = pHalfStep(numberOfParticles)-(timeStep/2)*(deriv_phi(qStepNew(numberOfParticles)-qStepNew(numberOfParticles-1)));
+        
         pStepOld = pStepNew;
         qStepOld = qStepNew;
         p(n,:) = pStepNew;
