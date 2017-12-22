@@ -2,7 +2,7 @@ numberOfParticles = 8;
 numberOfSteps = 10000;
 timeStep = 1/1000;
 t = linspace(0,1,numberOfSteps);
-B = [1,0,0,0,0,0,0,0; 0,0,0,0,0,0,0,1; 0,1,0,0,0,0,0,0];
+B = [1,0,0,0,0,0,0,0; 0,0,0,0,1,0,0,0; 0,0,0,0,0,0,0,1];
 sizeB = size(B);
 numberOfCoarseGrainParticles = sizeB(1);
 
@@ -40,8 +40,7 @@ for k = 1:numberOfSteps
     test(k,:) = transpose(firstTerm - M*B*transpose(deriv(k,:)));
 end
 
-histogram(test);
+histogram(test(:,2));
 %fit bell curve to data
-S = sum(transpose(test))/numberOfParticles;
-histfit(S);
+histfit(test(:,2));
 
