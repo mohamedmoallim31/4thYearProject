@@ -43,12 +43,12 @@ end
 
 %randomly generate a sample of the distribution along trajectory 
 sampleSize = floor(numberOfSteps/4);
-numberOfBins = floor(sampleSize/5);
 sample = datasample(test(:,2), sampleSize);
 %draw histogram
-histogram(sample, numberOfBins);
+histogram(sample);
 %fit bell curve to data
 histfit(sample);
+
 
 H_0 = 'H_0: The sample data are normally distributed with mean 0 and uknown s.d';
 H_1 =  'H_1: The sample data are not normally distributed';
@@ -64,6 +64,7 @@ fprintf('The degrees of freedom of this test is: degreesOfFreedom = %d\n', degre
 sigma =  std(sample);
 fprintf('The sample standard deviation of this test is sigma = %g\n', sigma);
 
+numberOfBins = floor(sampleSize/5);
 
 %want probability of landing in a bin to be equal for all bins
 probabilityOfLandingInBin = 1/numberOfBins;
