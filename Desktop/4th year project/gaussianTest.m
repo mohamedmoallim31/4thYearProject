@@ -53,7 +53,7 @@ histfit(sample);
 H_0 = 'H_0: The sample data are normally distributed with mean 0 and uknown s.d';
 H_1 =  'H_1: The sample data are not normally distributed';
 
-alpha = 0.05;
+alpha = 0.15;
 degreesOfFreedom = sampleSize - 2;
 
 disp(H_0);
@@ -79,7 +79,11 @@ testScore = 0 + zScore.*sigma;
 binEdges = [-inf, transpose(testScore), inf];
 
 %finds frequency of elements in each bin
-observedFrequencies = discretize(sample, binEdges);
+ x = discretize(sample, binEdges);
+ observedFrequencies = zeros(size(x));
+for i = 1:length(x)
+    observedFrequencies(i) = sum(x==x(i));
+end
 
 expectedFrequencyForEachBin = probabilityOfLandingInBin*sampleSize;
 testStatistic = sum((observedFrequencies-expectedFrequencyForEachBin).^2)/expectedFrequencyForEachBin;
@@ -87,7 +91,7 @@ fprintf('The test statistic is %g\n', testStatistic);
 valueToCompareAgainst = chi2inv(alpha, degreesOfFreedom);
 
 if testStatistic < valueToCompareAgainst
-    fprintf('We have fail to reject the null hypothesis\n');
+    fprintf('We have fail to reject the null hypothesis and can conclude that the distribution is normal\n');
 else
     fprintf('We reject the null hypothesis and can conclude the distribution is not normal\n');
 end
