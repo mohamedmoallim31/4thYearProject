@@ -1,5 +1,5 @@
 numberOfParticles = 8;
-numberOfSteps = 10000;
+numberOfSteps = 100000;
 timeStep = 1/1000;
 t = linspace(0,1,numberOfSteps);
 B = [1,0,0,0,0,0,0,0; 0,0,0,0,1,0,0,0; 0,0,0,0,0,0,0,1];
@@ -42,7 +42,7 @@ end
 
 
 %randomly generate a sample of the distribution along trajectory 
-sampleSize = floor(numberOfSteps/4);
+sampleSize = floor(numberOfSteps/100);
 numberOfBins = floor(sampleSize/5);
 sample = datasample(test(:,2), sampleSize);
 %draw histogram
@@ -91,7 +91,7 @@ fprintf('The test statistic is %g\n', testStatistic);
 valueToCompareAgainst = chi2inv(alpha, degreesOfFreedom);
 
 if testStatistic < valueToCompareAgainst
-    fprintf('We have fail to reject the null hypothesis and can conclude that the distribution is normal\n');
+    fprintf('We have fail to reject the null hypothesis\n');
 else
     fprintf('We reject the null hypothesis and can conclude the distribution is not normal\n');
 end
