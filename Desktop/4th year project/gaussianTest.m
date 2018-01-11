@@ -1,6 +1,6 @@
 numberOfParticles = 8;
-numberOfSteps = 100000;
-timeStep = 1/1000;
+numberOfSteps = 200000;
+timeStep = 1/200;
 t = linspace(0,1,numberOfSteps);
 B = [1,0,0,0,0,0,0,0; 0,0,0,0,1,0,0,0; 0,0,0,0,0,0,0,1];
 sizeB = size(B);
@@ -43,17 +43,24 @@ end
 
 %randomly generate a sample of the distribution along trajectory 
 sampleSize = floor(numberOfSteps/100);
-numberOfBins = floor(sampleSize/5);
+
+H_0 = 'H_0: The sample data are normally distributed with mean 0 and uknown s.d';
+H_1 =  'H_1: The sample data are not normally distributed';
+
+alpha = 0.15;
+%constant for optimal bin sizing described in paper by Williams
+c = norminv(alpha);
+%optiml bin size described in paper by williams
+numberOfBins = floor(nthroot(2*(((sampleSize-1)^2)/c^2), 5));
+
+
 sample = datasample(test(:,2), sampleSize);
 %draw histogram
 histogram(sample, numberOfBins);
 %fit bell curve to data
 histfit(sample);
 
-H_0 = 'H_0: The sample data are normally distributed with mean 0 and uknown s.d';
-H_1 =  'H_1: The sample data are not normally distributed';
 
-alpha = 0.15;
 degreesOfFreedom = sampleSize - 2;
 
 disp(H_0);
@@ -91,7 +98,7 @@ fprintf('The test statistic is %g\n', testStatistic);
 valueToCompareAgainst = chi2inv(alpha, degreesOfFreedom);
 
 if testStatistic < valueToCompareAgainst
-    fprintf('We have fail to reject the null hypothesis\n');
+    fprintf('We have failed to reject the null hypothesis\n');
 else
     fprintf('We reject the null hypothesis and can conclude the distribution is not normal\n');
 end
