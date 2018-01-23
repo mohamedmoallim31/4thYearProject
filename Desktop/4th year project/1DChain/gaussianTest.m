@@ -51,7 +51,7 @@ alpha = 0.15;
 %constant for optimal bin sizing described in paper by Williams
 c = norminv(alpha);
 %optiml bin size described in paper by williams
-numberOfBins = floor(nthroot(2*(((sampleSize-1)^2)/c^2), 5));
+numberOfBins = 4*floor(nthroot(2*(((sampleSize-1)^2)/c^2), 5));
 
 
 sample = datasample(test(:,2), sampleSize);
@@ -102,5 +102,10 @@ if testStatistic < valueToCompareAgainst
 else
     fprintf('We reject the null hypothesis and can conclude the distribution is not normal\n');
 end
+
+
+
+%Test the log of the observed function 
+logOfObserved = log(observedFrequencies);
 
 
