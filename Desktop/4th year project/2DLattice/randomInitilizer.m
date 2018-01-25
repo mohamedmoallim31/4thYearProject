@@ -6,8 +6,8 @@ function initial = randomInitilizer(gridDimension)
     %note randn returns a number from the standard normal distribution
     q0 = zeros(gridDimension*gridDimension, 2);
 
-    for i=1:gridDimension
-        for j=0:gridDimension-1
+    for j=0:gridDimension-1
+        for i=1:gridDimension
             q0(i + j*n, 1) = j + (randn/100);
             q0(i + j*n, 2) = i + (randn/100);
         end
