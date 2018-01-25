@@ -1,4 +1,4 @@
-function initial = randomInitilizer(gridDimension)
+function [p0, q0] = randomInitilizer(gridDimension)
     n = gridDimension;
     p0 = 2.*transpose(rand(gridDimension*gridDimension,2))-1;
     meanOfp0 = mean(p0);
@@ -12,6 +12,6 @@ function initial = randomInitilizer(gridDimension)
             q0(i + j*n, 2) = i + (randn/100);
         end
     end
-    initial= {p0, transpose(q0)};
+    q0 =  transpose(q0);
 end
 
