@@ -47,7 +47,7 @@ sampleSize = floor(numberOfSteps/100);
 H_0 = 'H_0: The sample data are normally distributed with mean 0 and uknown s.d';
 H_1 =  'H_1: The sample data are not normally distributed';
 
-alpha = 0.15;
+alpha = 0.01;
 %constant for optimal bin sizing described in paper by Williams
 c = norminv(alpha);
 %optiml bin size described in paper by williams
@@ -87,15 +87,19 @@ binEdges = [-inf, transpose(testScore), inf];
 
 %finds frequency of elements in each bin
  x = discretize(sample, binEdges);
- observedFrequencies = zeros(size(x));
-for i = 1:length(x)
-    observedFrequencies(i) = sum(x==x(i));
+ observedFrequencies = zeros(length(binEdges)-1,1);
+for i = 1:length(binEdges)-1
+    observedFrequencies(i) = sum(x==i);
 end
 
 expectedFrequencyForEachBin = probabilityOfLandingInBin*sampleSize;
 testStatistic = sum((observedFrequencies-expectedFrequencyForEachBin).^2)/expectedFrequencyForEachBin;
+
 fprintf('The test statistic is %g\n', testStatistic);
+
 valueToCompareAgainst = chi2inv(alpha, degreesOfFreedom);
+
+fprintf('The value to compare against is %g\n ', valueToCompareAgainst);
 
 if testStatistic < valueToCompareAgainst
     fprintf('We have failed to reject the null hypothesis\n');
@@ -103,9 +107,5 @@ else
     fprintf('We reject the null hypothesis and can conclude the distribution is not normal\n');
 end
 
-
-
-%Test the log of the observed function 
-logOfObserved = log(observedFrequencies);
 
 
