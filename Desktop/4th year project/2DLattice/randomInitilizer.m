@@ -1,6 +1,6 @@
 function [p0, q0] = randomInitilizer(gridDimension)
     n = gridDimension;
-    p0 = 2.*transpose(rand(gridDimension*gridDimension,2))-1;
+    p0 = 2.*transpose(rand(2*gridDimension*gridDimension,1))-1;
     meanOfp0 = mean(p0);
     p0 = p0 - meanOfp0;
     %note randn returns a number from the standard normal distribution

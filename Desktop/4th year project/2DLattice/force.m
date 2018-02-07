@@ -7,15 +7,18 @@ function force = force(ij, n, q, grad_u1, grad_u2)
         i = ij - j*n;
     end 
     
-    force = 0;
+    force = 0;    
+   
     %middle 
     if (i > 1 && i < n) && (j > 0 && j < n - 1)
-        topleftContribution     = -grad_u2(q(:,i-1+((j-1)*n)) - q(:,i+j*n));
-        topContribution         = -grad_u1(q(:,i+((j-1)*n)) - q(:,i+j*n));
+        topleftContribution     = -grad_u2(q(:,i-1+((j-1)*n)) - q(:,i+j*n)); 
+        topContribution         = -grad_u1(q(:,i+((j-1)*n)) - q(:,i+j*n)); 
         toprightContribution    = -grad_u2(q(:,i+1+((j-1)*n)) - q(:,i+j*n));
         leftContribution        = -grad_u1(q(:,i-1+j*n) - q(:,i+j*n));
+        
         rightContribution       = -grad_u1(q(:,i+1+j*n) - q(:,i+j*n));
         bottomleftContribution  = -grad_u2(q(:,i-1+(j+1)*n) - q(:,i+j*n));
+        
         bottomContribution      = -grad_u1(q(:,i+(j+1)*n) - q(:,i+j*n));
         bottomRightContribution = -grad_u2(q(:,i+1+(j+1)*n) - q(:,i+j*n));
         

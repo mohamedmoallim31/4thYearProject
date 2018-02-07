@@ -54,7 +54,7 @@ c = norminv(alpha);
 numberOfBins = 4*floor(nthroot(2*(((sampleSize-1)^2)/c^2), 5));
 
 
-sample = datasample(test(:,2), sampleSize);
+sample = datasample(test(:,3), sampleSize);
 %draw histogram
 histogram(sample, numberOfBins);
 %fit bell curve to data
