@@ -27,6 +27,8 @@ for i = 1:numberOfSteps+1
 end
 
 
+
+
 %following code is to calculate the derivative of v
 deriv = zeros(numberOfSteps, numberOfParticles);
 for j = 1:numberOfSteps

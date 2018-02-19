@@ -1,10 +1,10 @@
-function [p, q] = latticeSimulation(p0, q0, numberOfSteps, timeStep)
+function [p, q] = latticeSimulation(N, p0, q0, numberOfSteps, timeStep)
     
     %taking m = 1
     p = cell(numberOfSteps+1,1);
     q = cell(numberOfSteps+1,1);
-    p{1} = p0;
-    q{1} = q0;
+    p{1} = myreshape(p0,N);
+    q{1} = myreshape(q0,N);
     pStepOld = p0;
     qStepOld = q0;
     F = generateForceVector(q0);
@@ -13,7 +13,7 @@ function [p, q] = latticeSimulation(p0, q0, numberOfSteps, timeStep)
         pHalfStep = pStepOld + (timeStep/2)*generateForceVector(qStepOld);
         
         %qstep
-        qStepNew = qStepOld + timeStep*(pHalfStepe);
+        qStepNew = qStepOld + timeStep*(pHalfStep);
         
         %pstep
         F = generateForceVector(qStepNew);
@@ -21,8 +21,8 @@ function [p, q] = latticeSimulation(p0, q0, numberOfSteps, timeStep)
         
         pStepOld = pStepNew;
         qStepOld = qStepNew;
-        p{n} = pStepNew;
-        q{n} = qStepNew;
+        p{n} = myreshape(pStepNew,N);
+        q{n} = myreshape(qStepNew,N);
     end
 
 

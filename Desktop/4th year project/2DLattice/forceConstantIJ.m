@@ -1,14 +1,7 @@
 function [hessianAtK] = forceConstantIJ(ij, n)
 %FORCECONSTANTIJ Summary of this function goes here
 %   Detailed explanation goes here
-    j = floor(ij/n);
-    if (j - ij/n) == 0
-        i = j;
-        j = j - 1;
-    else
-        i = ij - j*n;
-    end 
-   
+    [i,j] = getIJ(ij,n);   
     hessianAtK = 0;    
     H_TL = hessian_u2([-1,1]);
     H_T  = hessian_u1([0, 1]);
