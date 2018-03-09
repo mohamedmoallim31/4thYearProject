@@ -14,7 +14,8 @@ function [ forceConstant ] = forceConstantMatrix(n)
     stripBelowDiag2 = -hessian_u2([1 ,-1]);
     stripBelowDiag3 = -hessian_u2([-1,-1]);
     
- 
+ % Construct the parts of the Hessian corresponding to Left-right
+ % interactions
     for k = 2:2:(2*n2)
         [i,j] = getIJ(k/2,n);
         if i==1 
@@ -30,34 +31,37 @@ function [ forceConstant ] = forceConstantMatrix(n)
         end
     end 
     
+    % Construct the parts of the Hessian corresponding to down, down+left,
+    % down+right interactions
     for k = 2:2:(2*n2)-2*n
         [i,j] = getIJ(k/2,n);
-        if i==1 
-            forceConstant(k-1:k,k-1+2*n:k+2*n) = stripAboveDiag1;
-            forceConstant(k-1:k,k+1+2*n:k+2+2*n) = stripAboveDiag2;  
+        if i==1
+            forceConstant(k-1:k, k-1+2*n:k+2*n) = stripAboveDiag1;   % D
+            forceConstant(k-1:k, k+1+2*n:k+2+2*n) = stripAboveDiag3; % DR
         elseif i==n
-            forceConstant(k-1:k, k-1+2*n:k+2*n) = stripAboveDiag1;
-            forceConstant(k-1:k, k-3+2*n:k-2+2*n) = stripAboveDiag3;
+            forceConstant(k-1:k, k-1+2*n:k+2*n) = stripAboveDiag1;   % D
+            forceConstant(k-1:k, k-3+2*n:k-2+2*n) = stripAboveDiag2; % DL
         else
-            forceConstant(k-1:k, k-3+2*n:k-2+2*n) = stripAboveDiag3;
-            forceConstant(k-1:k, k-1+2*n:k+2*n) = stripAboveDiag1;
-            forceConstant(k-1:k, k+1+2*n:k+2+2*n) = stripAboveDiag2;
+            forceConstant(k-1:k, k-3+2*n:k-2+2*n) = stripAboveDiag2; % DL
+            forceConstant(k-1:k, k-1+2*n:k+2*n) = stripAboveDiag1;   % D
+            forceConstant(k-1:k, k+1+2*n:k+2+2*n) = stripAboveDiag3; % DR
         end
     end 
     
-    
+    % Construct the parts of the Hessian corresponding to up, up+left,
+    % up+right interactions
     for k = 2+2*n:2:(2*n2)
         [i,j] = getIJ(k/2,n);
-        if i==1 
-            forceConstant(k-1:k,k-1-2*n:k-2*n) = stripBelowDiag1;
-            forceConstant(k-1:k,k+1-2*n:k+2-2*n) = stripBelowDiag2;  
+        if i==1
+            forceConstant(k-1:k,k-1-2*n:k-2*n) = stripBelowDiag1;    % U
+            forceConstant(k-1:k,k+1-2*n:k+2-2*n) = stripBelowDiag3;  % UR
         elseif i==n
-            forceConstant(k-1:k, k-1-2*n:k-2*n) = stripBelowDiag1;
-            forceConstant(k-1:k, k-3-2*n:k-2-2*n) = stripBelowDiag3;
+            forceConstant(k-1:k, k-1-2*n:k-2*n) = stripBelowDiag1;   % U
+            forceConstant(k-1:k, k-3-2*n:k-2-2*n) = stripBelowDiag2; % UL
         else
-            forceConstant(k-1:k, k-3-2*n:k-2-2*n) = stripBelowDiag3;
-            forceConstant(k-1:k, k-1-2*n:k-2*n) = stripBelowDiag1;
-            forceConstant(k-1:k, k+1-2*n:k+2-2*n) = stripBelowDiag2;
+            forceConstant(k-1:k, k-3-2*n:k-2-2*n) = stripBelowDiag2; % UL
+            forceConstant(k-1:k, k-1-2*n:k-2*n) = stripBelowDiag1;   % U
+            forceConstant(k-1:k, k+1-2*n:k+2-2*n) = stripBelowDiag3; % UR
         end
     end 
 
