@@ -1,0 +1,121 @@
+\section{The Mori-Zwanzig Projection}
+A way to combat the difficulty of implementing the dynamics of a system of molecules is to simply simulate an observable of the molecules. The observable can be a projection onto a local region of molecules, or it can be the mean of a local region of molecules and so on. However, this is not so simple as it sounds, since we still need to take into account the rest of system of molecules. The Mori-Zwanzig projection allows us to do this. This is because it gives us a method to express an observable of a system of molecules that we are interested in exactly, whilst taking into account the contributions from the rest of the system. 
+
+In \citep{Li2010} Li defines position and momentum of a system, maps to a subset of the position and momenta of the system. He then uses the Mori-Zwanzig projection to estimate how and observable of the system evolves in time while also taking into account the contributions from the rest of the system. In this following section we will summarise Li's paper.
+
+Let $\posu$, $\velv$ be the position and the velocity of the system respectively. Assuming each molecule has the same mass $m$ we define coarse grain variables
+\begin{align*}
+\p =& m\B\velv,\\
+\posq =& \B\posu.
+\end{align*}
+
+Where $\B$ is the observable which maps us to our coarse grained variables. Note that $\B$ is a $k\times n$ matrix with rank $dn$ where d is the dimension of the space and $k$ is the number of molecules in the coarse grained model. The coarse grained variables could for example be a selection of particular molecules like in figure \ref{figure:2}, or it can be the average of a cluster of molecules.
+
+\begin{figure}[h]\label{figure:2}
+\centering
+\def\svgscale{0.35}
+\input{Lattice.pdf_tex}
+\caption{An example of the kind of map $\B$ can be. In this example B would select the position and momenta of the red molecules in the Lattice. }
+\end{figure}
+
+To apply the Mori-Zwanzig projection we first need to define the Liouville operator by
+\begin{align*}
+\Lou = \velv \cdot \nabla_{\posu} - \frac{1}{m}\nabla V \cdot\nabla_{\velv}.
+\end{align*}
+
+We also define a projection operator on $\velv$ and $\posu$ by
+\begin{align*}
+\ProjP = \Exp{\left[ \cdot \vert \left (\p, \posq \right )\right ] }.
+\end{align*}
+
+Where the expectation is given with respect to Gibbs distribution. We also define $\ProjQ$ to be the operator orthogonal to $\ProjP$. Given that $\p(t)$ is a dynamic variable Li writes $\p(t) = e^{tL}\p(0)$ \cite{Li2010}, And applies the Mori-Zwanzig procedure to give us
+\begin{align}
+\dot{\p}(t) = e^{t\Lou}\ProjP\Lou\p(0) + \int_{0}^{t} e^{(t-s)\Lou}\K(s) \diff s + \F(t),\label{eq:4}
+\end{align}
+\begin{align}
+\K(t) & = \ProjP \Lou \F(t), \label{eq:5}
+\\ \F(t) &= e^{t\ProjQ\Lou}\ProjQ\Lou\p(0).\label{eq:6}
+\end{align}
+
+This is an equation of motion for coarse grain variable $\p$ which implicitly considers the rest of the system of molecules \cite{Li2010}  \cite{Hald2006}. This is a great result because it means that we can simulate local regions of a molecular dynamics model exactly whilst being able to take into consideration the rest of the model. However, there is one problem, as the equation is currently it is still too difficult to implement.
+
+\subsection{An approximation of the Dynamics}
+
+Due to the difficulty of implementing \eqref{eq:4}, \eqref{eq:5} and \eqref{eq:6} Li assumes that the system is in mechanical equilibrium. Then he uses this to approximate the positions and momenta of the molecules in the system. This is a very fair assumption to make considering that we assume that we are modelling the molecules of a Crystalline solid. 
+
+ First of all, to begin the approximation we need to define the matrix $\D$ which is given by the linearisation of the forces at the reference state. We call $\D$ the force constant matrix.
+
+Suppose the positions of each molecule $\posu_i \in \mathbb{R}^3$ for $1\leq i \leq n$. Assuming that $\posu = (\posu_1,\posu_2,\posu_3,...,\posu_n)^{\intercal}= (u_{11}, u_{12}, u_{13}, u_{21}, u_{22}, u_{23},..., u_{n1}, u_{n2}, u_{n3})^\intercal$. Let $\posu_{i}^*$ be the position where the inter-molecular potential of the $i^{th}$ molecule is minimized. Let $\force$ be the vector function whose $i^{th}$ entries $\force_i=\left(f_{i1},f_{i2}, f_{i3}\right)$ is the force at the $i^{th}$ molecule. Then we can write the force constant matrix $\D$ as block matrix whose block entries are given by 
+\begin{align*}
+\left(\D\right)_{ij} = \Diff_{\posu_i}\force_j(\posu)\vert_{\posu=\posu_{i}^*},
+\end{align*}
+ where  $ 1\leq i,j\leq n$ and $\Diff_{\posu_i}$ is the vector derivative with respect to $\posu_i$. Note that in the 1D and 2D cases $\D$ is defined analogously.
+ 
+Using this he came to an approximation of $\posu$ by
+\begin{align}
+\posu = \R\posq, \quad \text{where} \quad
+ \R = \D^{-1}\B^{\intercal}\left(\B\D^{-1}\B^{\intercal}\right)^{-1}.
+\end{align}
+
+Li also calculates that the projection operators operator $\ProjP$ applied to $\posu$ and $\velv$ will give 
+\begin{align}
+\ProjP\posu = \mean{\posu} + \matrixPu(\posu-\mean{\posu}),\\
+\ProjP\velv = \mean{\velv} + \matrixPu(\velv-\mean{\velv}),
+\end{align}
+
+Where $\mean{\posu}$ and $\mean{\velv}$ are the mean values of $\posu$ and $\velv$ in the reference state, $\matrixPu = \R\B$, and $\matrixPv = \B^{\intercal}\left(\B\B^{\intercal}\right)^{-1}\B$. We also define complimentary matrices $\matrixQu = \Identity - \matrixPu$, $\matrixQv = \Identity - \matrixPv$.\\
+
+In addition to this when $\Lou$, and $\ProjQ$ are applied to the random force $\F$ we get
+\begin{align}
+\Lou F & = \C \left( t \right) \velv\left( 0 \right) - \frac{1}{m}\Si \left( t \right)D\posu\left( 0 \right),\label{eq:a1}\\
+\ProjQ\Lou\F & = \C\left( t \right)\matrixQv \left( \velv\left( 0 \right) - \mean{\velv}\right) - \frac{1}{m}\Si\left( t \right)\D\matrixQu \left( \posu\left( 0 \right) - \mean{\posu} \right). \label{eq:a2}
+\end{align}
+
+
+Now we have all of the tools ready to understand the simplified version of equation \eqref{eq:4}. Looking at the first term $e^{t\Lou}\ProjP\Lou\p(0)$ Li noticed that this term is usually written as a mean force with respect to the Gibbs distribution
+\begin{align*}
+e^{t\Lou}\ProjP\Lou\p(0)=-\langle\nabla_{\posq}\curlyForce\rangle,
+\end{align*}
+  
+ and then proceeded to use a Harmonic approximation to write the mean force as
+ \begin{align}
+ \langle\nabla_{\posq}\curlyForce\rangle = \B\matrixPu^{\intercal}\nabla V(\R\posq)+\B\D\matrixQu(\posu(0)-\mean{\posu}).\label{eq:7}
+ \end{align}
+ 
+After Li approximated the first term in \eqref{eq:4} to get \eqref{eq:7} he then proceeds to approximate the second term of \eqref{eq:4}. To do this he found an approximation for $\F$ \eqref{eq:6} the random force felt by particles in the system.  This is given by 
+\begin{align}
+\F(t) = \C(t)\left( \posu(0)-\mean{\posu}\right) + \Si(t) \left( \velv(0) - \mean{\velv}\right),
+\end{align}
+
+where both $\C\left( t \right)$ and $\Si\left( t \right)$ are given by the initial value problem. They can be solved using the Verlet Method given in the introduction.
+\begin{align*}
+m\dot{\C}(t) & = -\Si(t)\D\matrixQu,\\
+\C(0) &= -\B\D\matrixQu,\\
+\Si(0) & = \mathbf{0},
+\end{align*}
+which is based off of \eqref{eq:a1} and \eqref{eq:a2}. 
+
+In addition to this using \eqref{eq:a1} and \eqref{eq:a2} he further approximates the term $\K$ by 
+\begin{align}
+\K\left( t \right) = \C\left( t \right)\matrixPv\velv\left( 0 \right) + \C\left(t\right)\matrixQv\mean{\velv}-\Si\left(t\right)\D\matrixQu\mean{\posu}.\\
+\end{align}
+
+Using this the second term of the of \eqref{eq:4} can be expressed as 
+\begin{align}
+\int_{0}^{t} e^{(t-s)\Lou}\K(s) \diff s = -\int_{0}^{t} \theta(t) \left(\B \B^{\intercal}\right)^{-1} \p\left(t-s\right) \diff s +\C\left(t\right) \mean{\posu} + \Si\left(t\right)\mean{\velv} + \B\D\matrixQu\mean{\posu},\label{eq:b1}
+\end{align}
+\begin{align*}
+\theta\left(t\right) = -\C\left(t\right)\B^{\intercal}.
+\end{align*}
+
+Now using \eqref{eq:b1} and \eqref{eq:7} and also defining $\M = m\left(\B\B^{\intercal}\right)^{-1}$ and $\G\left(t\right) = \left(\B\B^{\intercal}\right)^{-1}\F\left(t\right) $ he expresses the equations of motion \eqref{eq:2} and \eqref{eq:3} by 
+\begin{align}
+\dot{\posq} & = \frac{1}{m}\p,\label{eq:q}\\
+\M\dot{\p} & = -\R^{\intercal} \nabla V \left(\R\posq \right) - \int_{0}^{t} \Theta\left(\uptau\right)\p\left(t-\uptau\right) \diff \uptau +\G\left(t\right) + \force_0\left(t\right),\label{eq:p}
+\end{align}
+where
+\begin{align}
+\Theta\left( t\right) = \left(\B\B^{\intercal}\right)^{-1}\theta\left(t\right)\left(\B\B^{\intercal}\right)^{-1}.
+\end{align}
+
+This is an approximation of the dynamics of the coarse-grain variables that we have selected.

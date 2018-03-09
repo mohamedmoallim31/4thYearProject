@@ -1,0 +1,27 @@
+\begin{thebibliography}{1}
+
+\bibitem{BenLeimkuhler2015}
+Charles~Matthews Ben~Leimkuhler.
+\newblock {\em Molecular Dynamics With Deterministic and Stochastic Numerical
+  Methods}.
+\newblock Springer, Cham, 2015.
+
+\bibitem{Hald2006}
+Alexandre J. Chorin Ole~H Hald.
+\newblock {\em Stochastic Tools in Mathematics and Science}.
+\newblock Springer, New York, NY, 2006.
+
+\bibitem{Li2010}
+Xiantao Li.
+\newblock A coarse-grained molecular dynamics model for crystalline solids.
+\newblock {\em International Journal for Numerical Methods in Engineering},
+  83(8-9):986--997, 2010.
+
+\bibitem{Zhao2013}
+Gongpu Zhao, Juan~R Perilla, Ernest~L Yufenyuy, Xin Meng, Bo~Chen, Jiying Ning,
+  Jinwoo Ahn, Angela~M Gronenborn, Klaus Schulten, Christopher Aiken, et~al.
+\newblock Mature hiv-1 capsid structure by cryo-electron microscopy and
+  all-atom molecular dynamics.
+\newblock {\em Nature}, 497(7451):643, 2013.
+
+\end{thebibliography}

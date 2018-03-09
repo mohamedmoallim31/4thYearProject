@@ -8,9 +8,9 @@ function [hessianAtK] = forceConstantIJ(ij, n)
     H_TR = hessian_u2([1, 1]);
     H_L  = hessian_u1([-1,0]);
     H_R  = hessian_u1([1 ,0]);
-    H_BL = hessian_u2([-1,1]);
+    H_BL = hessian_u2([-1,-1]);
     H_B  = hessian_u1([0, -1]);
-    H_BR = hessian_u2([-1,-1]);
+    H_BR = hessian_u2([1,-1]);
    
     %middle 
     if (i > 1 && i < n) && (j > 0 && j < n - 1)       
@@ -35,10 +35,10 @@ function [hessianAtK] = forceConstantIJ(ij, n)
         hessianAtK =  H_TL + H_T + H_TR + H_L+ H_R;
     %left boundary 
     elseif i == 1 && (j > 0 && j < n - 1)
-        hessianAtK = H_BL + H_T + H_R + + H_TR+ H_BR;
+        hessianAtK = H_T + H_R +H_B + H_TR+ H_BR;
     %right boundary 
     elseif i == n  && (j > 0 && j < n - 1)
-        hessianAtK = H_B + H_BL + H_T + H_L + H_BR;
+        hessianAtK = H_B + H_BL + H_T + H_L +H_TL;
     end 
     
 end

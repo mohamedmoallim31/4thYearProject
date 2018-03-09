@@ -1,5 +1,5 @@
 %n is the number of particles in a row
-n = 16;
+n = 10;
 B = zeros(2*n^2,8);
 B(2*(2+1*n)-1, 1) = 1;
 B(2*(2+1*n), 2) = 1;
@@ -12,7 +12,7 @@ B(2*(n-1+(n-2)*n), 8) = 1;
 B = transpose(B);
 
 numberOfCoarseGrainParticles = 4;
-numberOfSteps = 1000;
+numberOfSteps = 50000;
 timeStep = 1/200;
 [v0,u0] = randomInitilizer(n);
 
@@ -39,4 +39,20 @@ for k = 1:numberOfSteps
     test(k,:) = transpose(firstTerm - M*B*transpose(deriv(k,:)));
 end
 
+sampleSize = floor(numberOfSteps/100);
+significanceLevel = 0.01;
+xsample = datasample(test(:,3), sampleSize);
+ysample = datasample(test(:,4), sampleSize);
+%draw histogram
+ax1 = subplot(2,1,1);
+histogram(xsample, binNo(sampleSize, significanceLevel));
+%fit bell curve to data
+histfit(sample);
 
+ax2 = subplot(2,1,2);
+histogram(ysample, binNo(sampleSize, significanceLevel));
+%fit bell curve to data
+histfit(sample);
+
+myChiSquaredTest(xsample, sampleSize);
+myChiSquaredTest(ysample, sampleSize);
