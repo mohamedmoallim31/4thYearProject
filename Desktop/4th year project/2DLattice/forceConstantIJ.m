@@ -1,8 +1,8 @@
 function [hessianAtK] = forceConstantIJ(ij, n)
 %FORCECONSTANTIJ Summary of this function goes here
 %   Detailed explanation goes here
-    [i,j] = getIJ(ij,n);   
-    hessianAtK = 0;    
+    [i,j] = getIJ(ij,n);
+    hessianAtK = 0;
     H_TL = hessian_u2([-1,1]);
     H_T  = hessian_u1([0, 1]);
     H_TR = hessian_u2([1, 1]);
@@ -11,9 +11,9 @@ function [hessianAtK] = forceConstantIJ(ij, n)
     H_BL = hessian_u2([-1,-1]);
     H_B  = hessian_u1([0, -1]);
     H_BR = hessian_u2([1,-1]);
-   
-    %middle 
-    if (i > 1 && i < n) && (j > 0 && j < n - 1)       
+
+    %middle
+    if (i > 1 && i < n) && (j > 0 && j < n - 1)
         hessianAtK = H_TL + H_T+ H_TR + H_L+ H_R + H_BL + H_B + H_BR;
     %top left corner
     elseif i == 1 && j == 0
@@ -27,19 +27,18 @@ function [hessianAtK] = forceConstantIJ(ij, n)
     %bottom right corner
     elseif i == n && j == n - 1
         hessianAtK =  H_T+ H_L+ H_TL;
-    %top boundary 
+    %top boundary
     elseif j == 0 &&(i > 1 && i < n)
         hessianAtK = H_L + H_R + H_BL + H_B + H_BR;
-    %bottom boundary 
+    %bottom boundary
     elseif j == n - 1 &&(i > 1 && i < n)
         hessianAtK =  H_TL + H_T + H_TR + H_L+ H_R;
-    %left boundary 
+    %left boundary
     elseif i == 1 && (j > 0 && j < n - 1)
-        hessianAtK = H_R + H_BR + H_TR + H_T+ H_B;
-    %right boundary 
+        hessianAtK = H_T + H_R +H_B + H_TR+ H_BR;
+    %right boundary
     elseif i == n  && (j > 0 && j < n - 1)
-        hessianAtK = H_B + H_BL + H_L + H_TL + H_T;
-    end 
-    
-end
+        hessianAtK = H_B + H_BL + H_T + H_L +H_TL;
+    end
 
+end
