@@ -9,7 +9,8 @@ Let $\posu$, $\velv$ be the position and the velocity of the system respectively
 \posq =& \B\posu.
 \end{align*}
 
-Where $\B$ is the observable which maps us to our coarse grained variables. Note that $\B$ is a $k\times n$ matrix with rank $dn$ where d is the dimension of the space and $k$ is the number of molecules in the coarse grained model. The coarse grained variables could for example be a selection of particular molecules like in figure \ref{figure:2}, or it can be the average of a cluster of molecules.
+Where $\B$ is the observable which maps us to our coarse grained variables. Note that $\B$ is a $k\times n$ matrix with rank $dn$ where d is the dimension of the space and $k$ is the number of molecules in the coarse grained model. The coarse grained variables could for example be a selection of particular molecules like in figure \ref{figure:2}, or it can be the average of a cluster of molecules.\\
+
 
 \begin{figure}[h]\label{figure:2}
 \centering
@@ -89,9 +90,12 @@ After Li approximated the first term in \eqref{eq:4} to get \eqref{eq:7} he then
 
 where both $\C\left( t \right)$ and $\Si\left( t \right)$ are given by the initial value problem. They can be solved using the Verlet Method given in the introduction.
 \begin{align*}
-m\dot{\C}(t) & = -\Si(t)\D\matrixQu,\\
-\C(0) &= -\B\D\matrixQu,\\
-\Si(0) & = \mathbf{0},
+\Si(0)  &= \mathbf{0},\quad \dot{\Si}(0)=-\B\D\matrixQv, \\
+\dot{\Si}(t) & = \C(t)\matrixQv,\quad m\ddot{\Si}(t)=-\Si(t)\D\matrixQv,
+\end{align*}
+\begin{align*}
+\C(0) &= -\B\D\matrixQu,\quad \dot{\C}(0)=\mathbf{0},\\
+m\dot{\C}(t) & = -\Si(t)\D\matrixQu,\quad m\ddot{\C}(t) =-\C(t)\matrixQv\D,
 \end{align*}
 which is based off of \eqref{eq:a1} and \eqref{eq:a2}. 
 
@@ -115,7 +119,7 @@ Now using \eqref{eq:b1} and \eqref{eq:7} and also defining $\M = m\left(\B\B^{\i
 \end{align}
 where
 \begin{align}
-\Theta\left( t\right) = \left(\B\B^{\intercal}\right)^{-1}\theta\left(t\right)\left(\B\B^{\intercal}\right)^{-1}.
+\Theta\left( t\right) = \left(\B\B^{\intercal}\right)^{-1}\theta\left(t\right)\left(\B\B^{\intercal}\right)^{-1}, \quad \force_{0}\left(t\right)=\C\left(t\right)\mean{\posu}+\Si\left(t\right)\mean{\velv}.
 \end{align}
 
-This is an approximation of the dynamics of the coarse-grain variables that we have selected.
+This is an approximation of the dynamics of the coarse-grain variables that we have selected

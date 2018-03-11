@@ -4,9 +4,9 @@ function memoryKernel = generateMemoryKernel(B, numberOfParticles, numberOfSteps
     memoryKernel = cell(numberOfSteps,1);
     for i = 1:numberOfSteps
         memoryKernel{i} = (B*transpose(B))\(theta{i}/(B*transpose(B)));
-        if det(memoryKernel{i}) < TOL
-            break;
-        end
+%         if det(memoryKernel{i}) < TOL
+%             break;
+%         end
     end
 end
 

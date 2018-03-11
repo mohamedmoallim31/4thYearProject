@@ -3,7 +3,7 @@
 \contentsline {subsection}{\numberline {1.2}The Hamiltonian Operator and the Verlet Method}{2}
 \contentsline {section}{\numberline {2}The Mori-Zwanzig Projection}{4}
 \contentsline {subsection}{\numberline {2.1}An approximation of the Dynamics}{5}
-\contentsline {section}{\numberline {3}A 1-Dimensional Example}{7}
+\contentsline {section}{\numberline {3}A 1-Dimensional Example}{8}
 \contentsline {subsection}{\numberline {3.1}The Model}{8}
 \contentsline {subsection}{\numberline {3.2}Coarse-grained Dynamics Of The 1D Chain}{10}
-\contentsline {section}{\numberline {4}Conclusion}{11}
+\contentsline {section}{\numberline {4}Conclusion}{12}
