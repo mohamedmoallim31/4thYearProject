@@ -19,9 +19,9 @@ v = fullTrajectory{1};
 u = fullTrajectory{2};
 
 M = (B*transpose(B))^(-1);
-p = zeros(numberOfSteps+1, numberOfCoarseGrainParticles);
-q = zeros(numberOfSteps+1, numberOfCoarseGrainParticles);
-for i = 1:numberOfSteps+1
+p = zeros(numberOfSteps, numberOfCoarseGrainParticles);
+q = zeros(numberOfSteps, numberOfCoarseGrainParticles);
+for i = 1:numberOfSteps
     p(i,:) = B*transpose(v(i,:));
     q(i,:) = B*transpose(u(i,:));
 end
@@ -31,7 +31,7 @@ end
 
 %following code is to calculate the derivative of v
 deriv = zeros(numberOfSteps, numberOfParticles);
-for j = 1:numberOfSteps
+for j = 1:numberOfSteps-1
     deriv(j,:) = (1/timeStep)*(v(j+1,:)-v(j,:));
 end
 

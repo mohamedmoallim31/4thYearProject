@@ -83,14 +83,14 @@ $\p$ and $\posq$ describe the momentum and position of the first, last, and one 
 Now to proceed with implementing the simplified coarse-grained dynamics we need to define the force constant matrix $\D$. In this case 
 \begin{align*}
 \D = \begin{pmatrix}
- -2\phi''(1)& \phi''(1)  &0  & 0 &0  &0  &0  &0 \\ 
+ -\phi''(1)& \phi''(1)  &0  & 0 &0  &0  &0  &0 \\ 
  \phi''(1)& -2\phi''(1)  & \phi''(1) & 0 &0  &0  &0 &0\\ 
 0 & \phi''(1) & -2\phi''(1) &\phi''(1)  &0  &0  &0  &0 \\ 
  0&0  & \phi''(1) &  -2\phi'(1)&\phi''(1)  & 0 & 0 &0 \\ 
  0&0  &0  &\phi''(1) &  -2\phi'(1)&\phi''(1)&0  &0 \\ 
  0& 0 & 0 & 0 & \phi''(1) &  -2\phi'(1)&\phi''(1) & 0\\ 
  0& 0 & 0 &  0& 0 & \phi''(1) &  -2\phi'(1)&\phi''(1) \\ 
- 0& 0 & 0 & 0 & 0 & 0&\phi''(1) & -2\phi''(1)  
+ 0& 0 & 0 & 0 & 0 & 0&\phi''(1) & -\phi''(1)  
 \end{pmatrix}.
 \end{align*}
 
@@ -104,3 +104,23 @@ After every every quantity has been defined to implement \eqref{eq:p}, and \eqre
 \int_{0}^{t} \Theta\left(\uptau\right)\p\left(t-\uptau\right) \diff \uptau \approx \frac{\Delta \uptau}{2}\left(\Theta_j\p_{0}+\Theta_0\p_{j}\right) + \Delta\uptau\sum_{i=1}^{j-1} \Theta{i}\p_{j-i}, 
 \end{align*}
 where $j=\myfloor{\frac{t}{h}}$, and h is the step size in the Verlet Scheme.
+
+\subsection{Results}
+
+After running the Verlet Scheme in this context 
+
+\subsection{Gaussian Test}
+
+In \citep{Li2010} Li claims that the correlation of $\F(t)$ is a Gaussian process with 0 mean. To test the validity of this claim we only need to test whether a sample of \begin{align*}
+\M\dot{\p}+\R^{\intercal}\nabla V\left(\R\posq\right)
+\end{align*}
+is normally distributed. 
+
+To test this I'm going to be using a Chi squared goodness of fit test \cite{Taeger2014}. I've implemented my own Chi squared test in MATLAB. To try and test the validity of this claim. In the implementation of the test I've picked the optimum bin number\cite{Hald2006}\cite{Jr.1950} for sample size $N$ given by 
+\begin{align*}
+k = 4 \sqrt[\leftroot{-3}\uproot{3}5]{\tfrac{2\left(N-1\right)^2}{c^2}},
+\end{align*}
+where $c$ is such that if $\alpha$ is the significance level of the test 
+\begin{align*}
+\int_{c}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{y^{2}}{2}} \diff y = \alpha.
+\end{align*}

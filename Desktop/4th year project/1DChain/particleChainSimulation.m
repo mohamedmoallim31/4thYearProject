@@ -35,8 +35,8 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
     %p_step_old is used to load up old value
 
     %taking m = 1
-    p = zeros(numberOfSteps+1, numberOfParticles);
-    q = zeros(numberOfSteps+1, numberOfParticles);
+    p = zeros(numberOfSteps, numberOfParticles);
+    q = zeros(numberOfSteps, numberOfParticles);
     p(1,:) = p0;
     q(1,:) = q0;
     qStepNew = zeros(numberOfParticles,1);
@@ -44,7 +44,7 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
     pHalfStep = zeros(numberOfParticles,1);
     pStepOld = p0;
     qStepOld = q0;
-    for n=2:numberOfSteps+1        
+    for n=2:numberOfSteps        
         pHalfStep(1) = pStepOld(1)+(timeStep/2)*(deriv_phi(qStepOld(2)-qStepOld(1)));
         for i=2:numberOfParticles-1
             pHalfStep(i) = pStepOld(i)+(timeStep/2)*(deriv_phi(qStepOld(i+1)-qStepOld(i))-deriv_phi(qStepOld(i)-qStepOld(i-1)));
@@ -70,7 +70,7 @@ function answer = particleChainSimulation(timeStep, numberOfParticles, numberOfS
         p(n,:) = pStepNew;
         q(n,:) = qStepNew;
     end
-    t = linspace(0,1,numberOfSteps+1);
+    t = linspace(0,1,numberOfSteps);
     if nargin == 3
         answer = {p,q};
         plot(t, p);

@@ -11,6 +11,13 @@ Alexandre J. Chorin Ole~H Hald.
 \newblock {\em Stochastic Tools in Mathematics and Science}.
 \newblock Springer, New York, NY, 2006.
 
+\bibitem{Jr.1950}
+C.~Arthur~Williams Jr.
+\newblock The choice of the number and width of classes for the chi-square test
+  of goodness of fit.
+\newblock {\em Journal of the American Statistical Association},
+  45(249):77--86, 1950.
+
 \bibitem{Li2010}
 Xiantao Li.
 \newblock A coarse-grained molecular dynamics model for crystalline solids.
@@ -21,6 +28,11 @@ Xiantao Li.
 Philipp~OJ Scherer.
 \newblock {\em Computational physics}.
 \newblock Springer, 2015.
+
+\bibitem{Taeger2014}
+Dirk Taeger and Sonja Kuhnt.
+\newblock {\em Statistical hypothesis testing}, pages 3--16.
+\newblock John Wiley \& Sons, Ltd, 2014.
 
 \bibitem{Zhao2013}
 Gongpu Zhao, Juan~R Perilla, Ernest~L Yufenyuy, Xin Meng, Bo~Chen, Jiying Ning,

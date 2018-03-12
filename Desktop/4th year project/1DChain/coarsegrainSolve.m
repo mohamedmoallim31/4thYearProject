@@ -9,7 +9,7 @@ function [p,q] = coarsegrainSolve(B, R, v0, u0, numberOfParticles, memoryKernel,
     M = (B*transpose(B))^-1;
     p = [];
 %     p = zeros(numberOfSteps+1, numberOfCoarseGrainParticles);
-    q = zeros(numberOfSteps+1, numberOfCoarseGrainParticles);
+    q = zeros(numberOfSteps, numberOfCoarseGrainParticles);
     
     p(1,:) = p0;
     q(1,:) = q0;

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.2.21)  11 MAR 2018 16:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.2.21)  12 MAR 2018 11:10
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -1739,13 +1739,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 13850 strings out of 493303
- 250909 string characters out of 3125432
- 312063 words of memory out of 3000000
- 17212 multiletter control sequences out of 15000+200000
+ 13856 strings out of 493303
+ 251008 string characters out of 3125432
+ 312093 words of memory out of 3000000
+ 17218 multiletter control sequences out of 15000+200000
  539354 words of font info for 56 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,14n,38p,10421b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 41i,15n,38p,10421b,353s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Users/Mohamed Moallim/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/publi
 c/amsfonts/cm/cmbx10.pfb><C:/Users/Mohamed Moallim/AppData/Local/Programs/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/Mohamed Moallim/AppDa
@@ -1771,7 +1771,7 @@ fonts/cm/cmti10.pfb><C:/Users/Mohamed Moallim/AppData/Local/Programs/MiKTeX 2.9
 sers/Mohamed Moallim/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/symbols/msbm10.pfb><C:/Users/Mohamed Moallim/AppData/Local/Programs/MiKTeX 
 2.9/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on Report.pdf (15 pages, 559327 bytes).
+Output written on Report.pdf (15 pages, 563768 bytes).
 PDF statistics:
  646 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
