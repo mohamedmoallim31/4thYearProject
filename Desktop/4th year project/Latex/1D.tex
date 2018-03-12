@@ -112,10 +112,13 @@ After running the Verlet Scheme in this context
 \subsection{Gaussian Test}
 
 In \citep{Li2010} Li claims that the correlation of $\F(t)$ is a Gaussian process with 0 mean. To test the validity of this claim we only need to test whether a sample of \begin{align*}
-\M\dot{\p}+\R^{\intercal}\nabla V\left(\R\posq\right)
+\int_{0}^{t} \Theta\left(\uptau\right)\p\left(t-\uptau\right) \diff \uptau +\G\left(t\right) + \force_0\left(t\right),
 \end{align*}
-is normally distributed. 
-
+is normally distributed. However by \eqref{eq:p} this simply corresponds to
+\begin{align*}
+\M\dot{\p}+\R^{\intercal}\nabla V\left(\R\posq\right). 
+\end{align*}
+This is much easier to compute and so we will be testing out claim using this quantity instead.
 To test this I'm going to be using a Chi squared goodness of fit test \cite{Taeger2014}. I've implemented my own Chi squared test in MATLAB. To try and test the validity of this claim. In the implementation of the test I've picked the optimum bin number\cite{Hald2006}\cite{Jr.1950} for sample size $N$ given by 
 \begin{align*}
 k = 4 \sqrt[\leftroot{-3}\uproot{3}5]{\tfrac{2\left(N-1\right)^2}{c^2}},
@@ -124,3 +127,10 @@ where $c$ is such that if $\alpha$ is the significance level of the test
 \begin{align*}
 \int_{c}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{y^{2}}{2}} \diff y = \alpha.
 \end{align*}
+
+In this test we will be taking out significance level to be $\alpha=1\%$ and a sample size which is $1\%$ of the amount of data available. We will be testing the following two hypotheses.\\
+
+\textbf{$H_0\colon$} The sample is normally distributed with mean 0 and uknown standard deviation.
+\textbf{$H_1\colon$} The sample is not normally distributed.
+
+Running the test on each coarse grain pa

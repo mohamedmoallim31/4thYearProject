@@ -8,4 +8,4 @@
 \contentsline {subsection}{\numberline {3.2}Coarse-grained Dynamics Of The 1D Chain}{10}
 \contentsline {subsection}{\numberline {3.3}Results}{12}
 \contentsline {subsection}{\numberline {3.4}Gaussian Test}{12}
-\contentsline {section}{\numberline {4}Conclusion}{12}
+\contentsline {section}{\numberline {4}Conclusion}{13}

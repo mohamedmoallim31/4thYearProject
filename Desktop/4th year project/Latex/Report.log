@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.2.21)  12 MAR 2018 11:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6600 64-bit) (preloaded format=pdflatex 2018.2.21)  12 MAR 2018 12:59
 entering extended mode
 **./Report.tex
 (Report.tex
@@ -1732,8 +1732,13 @@ File: coarsechain.pdf Graphic file (type pdf)
 <use coarsechain.pdf, page 1>
 Package pdftex.def Info: coarsechain.pdf , page1 used on input line 52.
 (pdftex.def)             Requested size: 277.78561pt x 82.033pt.
-) [11 <./coarsechain.pdf>]) (Conclusion.tex) [12]
-(Report.bbl) [13] (Report.aux (titlepage.aux) (contents.aux))
+) [11 <./coarsechain.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 131--132
+
+ []
+
+) (Conclusion.tex) [12] [13] (Report.bbl) [14] (Report.aux (titlepage.aux)
+(contents.aux))
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -1771,9 +1776,9 @@ fonts/cm/cmti10.pfb><C:/Users/Mohamed Moallim/AppData/Local/Programs/MiKTeX 2.9
 sers/Mohamed Moallim/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfo
 nts/symbols/msbm10.pfb><C:/Users/Mohamed Moallim/AppData/Local/Programs/MiKTeX 
 2.9/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on Report.pdf (15 pages, 563768 bytes).
+Output written on Report.pdf (16 pages, 565075 bytes).
 PDF statistics:
- 646 PDF objects out of 1000 (max. 8388607)
+ 649 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
