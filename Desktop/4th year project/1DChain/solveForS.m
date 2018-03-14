@@ -6,9 +6,11 @@ function S = solveForS(B, numberOfParticles, numberOfSteps, timestep)
      Qv = eye(numberOfParticles) - generatePv(B);
      D_0 = -2*72;
      D_mod1 = 72;
-     D = -full(gallery('tridiag', numberOfParticles, D_mod1,D_0,D_mod1));
+     D = full(gallery('tridiag', numberOfParticles, D_mod1,D_0,D_mod1));
      D(1,1) = -72;
      D(numberOfParticles,numberOfParticles)=-72;
+     D = -D;
+     
      A = cell(numberOfSteps,1);
      S = cell(numberOfSteps,1);
      %set initial conditions

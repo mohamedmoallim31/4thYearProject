@@ -5,7 +5,7 @@ function F = generateF(B, numberOfParticles, numberOfSteps, timeStep, v0, u0)
     eqU = zeros(numberOfParticles,1);
     eqU(1) = u0(1);
     for i = 2:numberOfParticles
-        eqU(i) = eqU(i)+1;
+        eqU(i) = eqU(i-1)+1;
     end
     
     C = solveForC(B, numberOfParticles, numberOfSteps, timeStep);

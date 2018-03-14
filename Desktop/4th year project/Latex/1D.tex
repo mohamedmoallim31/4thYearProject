@@ -1,0 +1,136 @@
+\section{A 1-Dimensional Example}
+
+In this section I will be testing the claims made by Li in \citep{Li2010}. To do this I've written 20 MATLAB files which describe a Hamiltonian system, use numerical methods such as the Verlet method to solve the system of ordinary differential equations which describe the system\eqref{eq:2} \eqref{eq:3}, and solve the system of ordinary differential equations which describe its coarse-grained counterpart \eqref{eq:p} \eqref{eq:q}. The first set of differential equations which describe the motion of the entire Hamiltonian system were implemented in order to be compared against the coarse-grained dynamics. We do this by finding the observable of the full scale system at each time step and then compare that against the coarse-grained dynamics at each time step. Doing this gives an insight to just how accurately the coarse-grained dynamics simulate the observable the Hamiltonian system.
+
+\subsection{The Model}
+To begin with the example we must first describe the model we are choosing to implement. We will be considering a 1-Dimensional particle chain consisting of 8 particles each with a mass of 1. The particle chain will model pairwise interactions according to the Lennard-Jones potential given by 
+\begin{align*}
+\phi(r) = \frac{1}{r^{12}} - \frac{2}{r^6}.
+\end{align*}\\
+
+\begin{figure}[h]
+\centering
+\def\svgscale{0.55}
+\input{LennardJones.pdf_tex}
+\caption{A graph of the Lennard Jones Potential} \label{figure:3}
+\end{figure}
+
+
+Notice that in figure \ref{figure:3}  and the equation for the potential indicate $\lim_{r\to 0} \phi(r)=\infty$. This is to try and model the repulsive forces between the particles at close distances \cite{BenLeimkuhler2015}. The figure and the equation for the potential also indicate that $\lim_{r\to \infty} \phi(r)= 0$. This is to try and show that if two particles are far from each other then they will feel less of an attractive force to each other. In addition to this the minimum potential is achieved at a distance of 1 between the particles. In other words, the greatest attraction between two particles is achieved at 1. On top of all of this, the Lennard Jones potential is not very computationally expensive to compute since the $12^{th}$ of $r$ is achieved by squaring the $6^{th}$ power\cite{BenLeimkuhler2015}. From this we see that the Lennard Jones potential is a good choice to model the inter molecular potential of two molecules.
+
+Taking the intermolecular potential into account we write the equations of motion of the Hamiltonian system \eqref{eq:2} and \eqref{eq:3} as 
+\begin{align*}
+\dot{\posu} &= \velv,\\
+\dot{\velv} &=  -\nabla V\left(\posu \right), \quad  \text{where} \quad V(\posu)=\sum_{i=1}^{8}\phi\left( u_{i+1}-u_{i}\right).
+\end{align*}
+Notice that since the mass of each particle is 1 that the momentum and velocity of the system are equal. \\
+
+
+ \begin{figure}[h]
+\centering
+\def\svgscale{0.55}
+\input{particleChain.pdf_tex}
+\caption{This figure depicts the arrangement of the Model. The contribution to the potential of the molecule at position $u_4$ is given by $\phi(u_5-u_4)+\phi(u_4-u_3)$. Under the Lennard jones potential each particle oscilates around its initial position.} \label{figure:4}
+\end{figure}
+
+
+The only thing left to define for the model is the initial conditions of the particle chain. Both the velocity and positions of the particle chain are randomly generated. Each element of the initial velocity vector $\velv(0)$ is uniformly distributed in $\left [ -1, 1  \right ]$. To also ensure that average velocity at time 0 is 0 we subtract the mean velocity from each element in the velocity vector. In other words if $\mathbf{z}$ is the vector of elements given by
+\begin{align*}
+z_i = 2x_i-1,\quad \text{where} \quad    x_i\in X\sim U(-1,1) \quad \text{for} \quad 1\leq i \leq 8, 
+\end{align*}
+ then $\velv(0)$ is given by 
+ \begin{align*}
+ v_i(0) = z_i - \mean{\mathbf{z}}.
+ \end{align*}
+This is all to ensure that the mean velocity of the entire system of molecules is 0 relative to its original position. 
+
+The position vector is a little bit harder to assign an initial value to. This is because if some of the particles start too closely together then the intermolecular potential would dictate that the force acting on the particles could be large enough for the chain to break in possibly more than 1 place. Furthermore, if some of the particles start too far away from each other then the intermolecular potential between the particles would be too small for the particles to come together again. This case means that the chain would be broken to begin with. To get around this I assigned the initial position $\posu(0)$ to be given by\begin{align*}
+u_{1} &= y_1,\\
+u_{i+1}(0) &= u_{i}+1+\frac{y_i}{100}, \quad \text{where} \quad  2 \leq i \leq 7,
+\end{align*}
+and\begin{align*}
+y_i \in Y\sim N(0,1) \quad \text{for} \quad 1\leq i\leq 8. 
+\end{align*}
+
+\subsection{Coarse-grained Dynamics Of The 1D Chain}
+Now that the Hamiltonian system is clearly defined it is time to select the coarse grained variables $\p$ and $\posq$. To do this we must pick an observable $\B$. The one I have chosen for the example is  
+\begin{align*}
+\B=
+\begin{pmatrix}
+1 & 0 &0  &0  &0  &0  &0  & 0\\ 
+ 0& 0 &0  &0  &1  &0  &0  &0 \\ 
+ 0&  0&0  & 0 &0  &0  & 0 & 1
+\end{pmatrix}.
+\end{align*}
+This observable selects the first, last, and one of the middle particles. Following in suit of the previous section we define coarse-grain variables 
+\begin{align*}
+\p &= \B\velv,\\
+\posq &=\B\posu.
+\end{align*}
+$\p$ and $\posq$ describe the momentum and position of the first, last, and one of the middle. Similarly if you want to find the dynamics of the sum of all the particles one can select the observable to be $\B=\begin{pmatrix}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1
+\end{pmatrix}$.\\
+
+
+\begin{figure}[h]
+\centering
+\def\svgscale{0.35}
+\input{coarsechain.pdf_tex}
+\caption{A depiction of the coarse-grain arrangement.} \label{figure:3}
+\end{figure}
+
+
+Now to proceed with implementing the simplified coarse-grained dynamics we need to define the force constant matrix $\D$. In this case 
+\begin{align*}
+\D = \begin{pmatrix}
+ -\phi''(1)& \phi''(1)  &0  & 0 &0  &0  &0  &0 \\ 
+ \phi''(1)& -2\phi''(1)  & \phi''(1) & 0 &0  &0  &0 &0\\ 
+0 & \phi''(1) & -2\phi''(1) &\phi''(1)  &0  &0  &0  &0 \\ 
+ 0&0  & \phi''(1) &  -2\phi'(1)&\phi''(1)  & 0 & 0 &0 \\ 
+ 0&0  &0  &\phi''(1) &  -2\phi'(1)&\phi''(1)&0  &0 \\ 
+ 0& 0 & 0 & 0 & \phi''(1) &  -2\phi'(1)&\phi''(1) & 0\\ 
+ 0& 0 & 0 &  0& 0 & \phi''(1) &  -2\phi'(1)&\phi''(1) \\ 
+ 0& 0 & 0 & 0 & 0 & 0&\phi''(1) & -\phi''(1)  
+\end{pmatrix}.
+\end{align*}
+
+Now that $\D$ is defined we find all the other matrices such as $\R$, $\matrixPu$, $\matrixQu$, and so on by just computing them from the formulas given in the previous section. After these matrices are found the next step is to find $\mean{\posu}$, $\mean{\velv}$, $\Si(t)$, $\C(t)$ and use these to compute $\F(t)$, $t\in\left[0, \uptau \right]$. From the initial condition of $\velv$ we can see that the mean velocity of all the particles would be 0. This is  because they all oscillate around the same positions. This also means that the mean positions of the particles would be given by $\mean{u}_1 = u_1(0)$, and $\mean{u}_i=\mean{u}_{i-1}+1$ for $2\leq i\leq 8$. All of the MATLAB files to compute the matrices are in the appendix. 
+
+To find $\Si(t)$ and $\C(t)$, $t\in \left[0,\uptau\right]$ we implement the Verlet method given in section \ref{sec:V}. To find $\C$ we do this by setting $\p = \dot{\C}$, $\posq = \C$, $\nabla V(\posq)=q\matrixQv \D$ in the Verlet Method. To find $\Si$ we do this by setting $\p=\dot{\Si}$, $\posq=\Si$ and $\nabla V(\posq)=\posq\D\matrixQv$ in the Verlet method. I implemented the Verlet time stepping scheme in MATLAB.
+
+After every every quantity has been defined to implement \eqref{eq:p}, and \eqref{eq:q} we can use the Verlet scheme to find $\p(t)$ and $\posq(t)$ for $t\in\left[0,\uptau \right]$. We only need to take care when dealing with the second term from \eqref{eq:p}. To calculate this term I implemented the trapezoidal rule given in \cite{Scherer2015}. Using this we can write the second term of \eqref{eq:p} as
+
+\begin{align*}
+\int_{0}^{t} \Theta\left(\uptau\right)\p\left(t-\uptau\right) \diff \uptau \approx \frac{\Delta \uptau}{2}\left(\Theta_j\p_{0}+\Theta_0\p_{j}\right) + \Delta\uptau\sum_{i=1}^{j-1} \Theta{i}\p_{j-i}, 
+\end{align*}
+where $j=\myfloor{\frac{t}{h}}$, and h is the step size in the Verlet Scheme.
+
+\subsection{Results}
+
+After running the Verlet Scheme in this context 
+
+\subsection{Gaussian Test}
+
+In \citep{Li2010} Li claims that the correlation of $\F(t)$ is a Gaussian process with 0 mean. To test the validity of this claim we only need to test whether a sample of \begin{align*}
+\int_{0}^{t} \Theta\left(\uptau\right)\p\left(t-\uptau\right) \diff \uptau +\G\left(t\right) + \force_0\left(t\right),
+\end{align*}
+is normally distributed. However by \eqref{eq:p} this simply corresponds to
+\begin{align*}
+\M\dot{\p}+\R^{\intercal}\nabla V\left(\R\posq\right). 
+\end{align*}
+This is much easier to compute and so we will be testing out claim using this quantity instead.
+To test this I'm going to be using a Chi squared goodness of fit test \cite{Taeger2014}. I've implemented my own Chi squared test in MATLAB. To try and test the validity of this claim. In the implementation of the test I've picked the optimum bin number\cite{Hald2006}\cite{Jr.1950} for sample size $N$ given by 
+\begin{align*}
+k = 4 \sqrt[\leftroot{-3}\uproot{3}5]{\tfrac{2\left(N-1\right)^2}{c^2}},
+\end{align*}
+where $c$ is such that if $\alpha$ is the significance level of the test 
+\begin{align*}
+\int_{c}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{y^{2}}{2}} \diff y = \alpha.
+\end{align*}
+
+In this test we will be taking out significance level to be $\alpha=1\%$ and a sample size which is $1\%$ of the amount of data available. We will be testing the following two hypotheses.\\
+
+\textbf{$H_0\colon$} The sample is normally distributed with mean 0 and uknown standard deviation.
+\textbf{$H_1\colon$} The sample is not normally distributed.
+
+Running the test on each coarse grain pa

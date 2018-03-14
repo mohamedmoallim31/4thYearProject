@@ -1,0 +1,95 @@
+% Encoding: UTF-8
+
+@Article{Li2010,
+  author    = {Li, Xiantao},
+  title     = {A coarse-grained molecular dynamics model for crystalline solids},
+  journal   = {International Journal for Numerical Methods in Engineering},
+  year      = {2010},
+  volume    = {83},
+  number    = {8-9},
+  pages     = {986--997},
+  issn      = {1097-0207},
+  doi       = {10.1002/nme.2892},
+  keywords  = {molecular dynamics, coarse-graining},
+  publisher = {John Wiley \& Sons, Ltd.},
+  url       = {http://dx.doi.org/10.1002/nme.2892},
+}
+
+@Book{BenLeimkuhler2015,
+  title     = {Molecular Dynamics With Deterministic and Stochastic Numerical Methods},
+  publisher = {Springer, Cham},
+  year      = {2015},
+  author    = {Ben Leimkuhler, Charles Matthews},
+  editor    = {S.S. Antman P. Holmes L. Greengard},
+}
+
+@InBook{Taeger2014,
+  pages     = {3--16},
+  title     = {Statistical hypothesis testing},
+  publisher = {John Wiley \& Sons, Ltd},
+  year      = {2014},
+  author    = {Taeger, Dirk and Kuhnt, Sonja},
+  isbn      = {9781118762585},
+  booktitle = {Statistical Hypothesis Testing with SAS and R},
+  doi       = {10.1002/9781118762585.ch1},
+  keywords  = {programming philosophy, SAS and R, statistical hypothesis, t-test},
+  url       = {http://dx.doi.org/10.1002/9781118762585.ch1},
+}
+
+@Article{Jr.1950,
+  author    = {C. Arthur Williams Jr.},
+  title     = {The Choice of the Number and Width of Classes for the Chi-Square Test of Goodness of Fit},
+  journal   = {Journal of the American Statistical Association},
+  year      = {1950},
+  volume    = {45},
+  number    = {249},
+  pages     = {77-86},
+  doi       = {10.1080/01621459.1950.10483336},
+  eprint    = {https://doi.org/10.1080/01621459.1950.10483336},
+  publisher = {Taylor \& Francis},
+  url       = { 
+        https://doi.org/10.1080/01621459.1950.10483336
+    
+},
+}
+
+@Article{Mann1942,
+  author    = {H. B. Mann and A. Wald},
+  title     = {On the Choice of the Number of Class Intervals in the Application of the Chi Square Test},
+  journal   = {The Annals of Mathematical Statistics},
+  year      = {1942},
+  volume    = {13},
+  number    = {3},
+  pages     = {306-317},
+  issn      = {00034851},
+  publisher = {Institute of Mathematical Statistics},
+  url       = {http://www.jstor.org/stable/2235942},
+}
+
+@Article{Zhao2013,
+  author    = {Zhao, Gongpu and Perilla, Juan R and Yufenyuy, Ernest L and Meng, Xin and Chen, Bo and Ning, Jiying and Ahn, Jinwoo and Gronenborn, Angela M and Schulten, Klaus and Aiken, Christopher and others},
+  title     = {Mature HIV-1 capsid structure by cryo-electron microscopy and all-atom molecular dynamics},
+  journal   = {Nature},
+  year      = {2013},
+  volume    = {497},
+  number    = {7451},
+  pages     = {643},
+  publisher = {Nature Publishing Group},
+}
+
+@Book{Hald2006,
+  title     = {Stochastic Tools in Mathematics and Science},
+  publisher = {Springer, New York, NY},
+  year      = {2006},
+  author    = {Alexandre J. Chorin Ole H Hald},
+  editor    = {Stuart Antman Philip Holmes K.R. Sreenivasan},
+}
+
+@Book{Scherer2015,
+  title     = {Computational physics},
+  publisher = {Springer},
+  year      = {2015},
+  author    = {Scherer, Philipp OJ},
+}
+
+@Comment{jabref-meta: databaseType:bibtex;}

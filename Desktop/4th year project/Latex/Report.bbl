@@ -1,0 +1,44 @@
+\begin{thebibliography}{1}
+
+\bibitem{BenLeimkuhler2015}
+Charles~Matthews Ben~Leimkuhler.
+\newblock {\em Molecular Dynamics With Deterministic and Stochastic Numerical
+  Methods}.
+\newblock Springer, Cham, 2015.
+
+\bibitem{Hald2006}
+Alexandre J. Chorin Ole~H Hald.
+\newblock {\em Stochastic Tools in Mathematics and Science}.
+\newblock Springer, New York, NY, 2006.
+
+\bibitem{Jr.1950}
+C.~Arthur~Williams Jr.
+\newblock The choice of the number and width of classes for the chi-square test
+  of goodness of fit.
+\newblock {\em Journal of the American Statistical Association},
+  45(249):77--86, 1950.
+
+\bibitem{Li2010}
+Xiantao Li.
+\newblock A coarse-grained molecular dynamics model for crystalline solids.
+\newblock {\em International Journal for Numerical Methods in Engineering},
+  83(8-9):986--997, 2010.
+
+\bibitem{Scherer2015}
+Philipp~OJ Scherer.
+\newblock {\em Computational physics}.
+\newblock Springer, 2015.
+
+\bibitem{Taeger2014}
+Dirk Taeger and Sonja Kuhnt.
+\newblock {\em Statistical hypothesis testing}, pages 3--16.
+\newblock John Wiley \& Sons, Ltd, 2014.
+
+\bibitem{Zhao2013}
+Gongpu Zhao, Juan~R Perilla, Ernest~L Yufenyuy, Xin Meng, Bo~Chen, Jiying Ning,
+  Jinwoo Ahn, Angela~M Gronenborn, Klaus Schulten, Christopher Aiken, et~al.
+\newblock Mature hiv-1 capsid structure by cryo-electron microscopy and
+  all-atom molecular dynamics.
+\newblock {\em Nature}, 497(7451):643, 2013.
+
+\end{thebibliography}
