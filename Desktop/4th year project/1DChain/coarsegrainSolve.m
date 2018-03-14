@@ -26,7 +26,7 @@ function [p,q] = coarsegrainSolve(B, R, v0, u0, numberOfParticles, memoryKernel,
         qStepNew = qStepOld + stepSize*(pHalfStep);
         
         %% Please add in update to firstTerm and secondTerm as above
-        
+        firstTerm = generateFirstTermFrom26(R, qStepNew, numberOfParticles);
         pStepNew = pHalfStep - (stepSize/2)*(M\(firstTerm + secondTerm-M*F{n}-f_0{n}));
         
         p(n,:) = pStepNew;
