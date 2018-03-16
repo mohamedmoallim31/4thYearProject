@@ -10,10 +10,10 @@ function [p, q] = latticeSimulation(N, p0, q0, numberOfSteps, timeStep)
     F = generateForceVector(q0);
     for n=1:numberOfSteps+1        
         %phalfstep
-        pHalfStep = pStepOld + (timeStep/2)*generateForceVector(qStepOld);
+        pHalfStep = pStepOld + (timeStep/2)*F;
         
         %qstep
-        qStepNew = qStepOld + timeStep*(pHalfStep);
+        qStepNew = qStepOld + timeStep*pHalfStep;
         
         %pstep
         F = generateForceVector(qStepNew);

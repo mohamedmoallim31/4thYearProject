@@ -1,8 +1,10 @@
 function [p0, q0] = randomInitilizer(gridDimension)
     n = gridDimension;
-    p0 = 2.*transpose(rand(n^2,2))-1;
-    meanOfp0 = mean(p0);
+    p0 = 0.2*randn(n*n,2);
+    meanOfp0 = mean(p0,1);
     p0 = p0 - meanOfp0;
+    p0 = p0';
+    
     %note randn returns a number from the standard normal distribution
     q = zeros(n*n, 2);
 

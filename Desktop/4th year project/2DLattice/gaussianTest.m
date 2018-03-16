@@ -1,5 +1,5 @@
 %n is the number of particles in a row
-n = 10;
+n = 5;
 B = zeros(2*n^2,8);
 B(2*(2+1*n)-1, 1) = 1;
 B(2*(2+1*n), 2) = 1;
@@ -12,14 +12,14 @@ B(2*(n-1+(n-2)*n), 8) = 1;
 B = transpose(B);
 
 numberOfCoarseGrainParticles = 4;
-numberOfSteps = 50000;
-timeStep = 1/200;
+numberOfSteps = 90000;
+timeStep = 1/300;
 [v0,u0] = randomInitilizer(n);
 
 %calculate full trajectory
 [v,u] = latticeSimulation(n,v0,u0, numberOfSteps, timeStep);
 
-M = (B*transpose(B))^(-1);
+M = inv(B*transpose(B));
 p = zeros(numberOfSteps+1, 2*numberOfCoarseGrainParticles);
 q = zeros(numberOfSteps+1, 2*numberOfCoarseGrainParticles);
 for i = 1:numberOfSteps+1
@@ -27,16 +27,17 @@ for i = 1:numberOfSteps+1
     q(i,:) = B*transpose(u{i});
 end
 
-deriv = zeros(numberOfSteps, 2*n^2);
+deriv = zeros(numberOfSteps, 2*numberOfCoarseGrainParticles);
 for i = 1:numberOfSteps
-    deriv(i,:) =(v{i+1}-v{i})/timeStep;
+    deriv(i,:) =(p(i+1,:)-p(i,:))/timeStep;
 end
 
 R = generateR(B, n);
 test = zeros(1, 2*numberOfCoarseGrainParticles);
+
 for k = 1:numberOfSteps
-    firstTerm = generateFirstTermFrom26(R, q(k,:),n);
-    test(k,:) = transpose(firstTerm - M*B*transpose(deriv(k,:)));
+    firstTerm = generateFirstTermFrom26(R, B, q(k,:),n);
+    test(k,:) = transpose(firstTerm - M*transpose(deriv(k,:))); 
 end
 
 sampleSize = floor(numberOfSteps/100);
@@ -47,12 +48,12 @@ ysample = datasample(test(:,4), sampleSize);
 ax1 = subplot(2,1,1);
 histogram(xsample, binNo(sampleSize, significanceLevel));
 %fit bell curve to data
-histfit(sample);
+histfit(xsample);
 
 ax2 = subplot(2,1,2);
 histogram(ysample, binNo(sampleSize, significanceLevel));
 %fit bell curve to data
-histfit(sample);
+histfit(ysample);
 
 myChiSquaredTest(xsample, sampleSize);
 myChiSquaredTest(ysample, sampleSize);
