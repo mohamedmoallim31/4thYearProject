@@ -1,4 +1,4 @@
-function C = solveForC(B, numberOfParticles, numberOfSteps, timestep)
+function [C, S] = solveForCS(B, numberOfParticles, numberOfSteps, timestep)
 %Attempt to use method from molecular dynamics book to solve for C
 %   A = m *((d/dt)*C)
 
@@ -23,9 +23,13 @@ function C = solveForC(B, numberOfParticles, numberOfSteps, timestep)
      C{1} = Ck;
      
      for k = 2:numberOfSteps
-         Skhalfstep = Sk + (timestep/2)*Ck*Qv;
-         Cknext = Ck - ((timestep)*Skhalfstep*D*Qu);
-         Sknext = Skhalfstep + (timestep/2)*Cknext*Qv;
+         Ckhalfstep = Ck - (timestep/2)*Sk*D*Qu;
+         Sknext = Sk + timestep*Ckhalfstep*Qv;
+         Cknext = Ckhalfstep - (timestep/2)*Sknext*D*Qu;
+         
+%          Skhalfstep = Sk + (timestep/2)*Ck*Qv;
+%          Cknext = Ck - ((timestep)*Skhalfstep*D*Qu);
+%          Sknext = Skhalfstep + (timestep/2)*Cknext*Qv;
          Sk = Sknext;
          Ck = Cknext;
          C{k} = Ck;

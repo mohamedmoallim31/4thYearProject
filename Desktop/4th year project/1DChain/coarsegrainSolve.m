@@ -6,7 +6,7 @@ function [p,q] = coarsegrainSolve(B, R, v0, u0, numberOfParticles, memoryKernel,
     q0 = B*u0;
     sizeB = size(B);
     numberOfCoarseGrainParticles = sizeB(1);
-    M = (B*transpose(B))^-1;
+    M = inv(B*transpose(B));
     p = [];
 %     p = zeros(numberOfSteps+1, numberOfCoarseGrainParticles);
     q = zeros(numberOfSteps, numberOfCoarseGrainParticles);
@@ -14,20 +14,20 @@ function [p,q] = coarsegrainSolve(B, R, v0, u0, numberOfParticles, memoryKernel,
     p(1,:) = p0;
     q(1,:) = q0;
     F = generateF(B, numberOfParticles, numberOfSteps, stepSize,v0,u0);
-    f_0 = generatef_0(B, numberOfParticles, numberOfSteps, stepSize,u0);
+    f_0 = generatef_0(B, numberOfParticles, numberOfSteps, stepSize);
     pStepOld = p0;
     qStepOld = q0;
     for n=2:numberOfSteps
-        firstTerm = generateFirstTermFrom26(R, qStepOld, numberOfParticles);
-        t = n*stepSize;
-        secondTerm  = generateTerm2Of26(memoryKernel, p, stepSize, t, numberOfCoarseGrainParticles);
+        firstTerm = generateFirstTermFrom26(R, B, qStepOld, numberOfParticles);
+        
+        secondTerm  = generateTerm2Of26(memoryKernel, p, stepSize, n, numberOfCoarseGrainParticles);
         pHalfStep = pStepOld - (stepSize/2)*(M\(firstTerm + secondTerm-M*F{n}-f_0{n}));
         
         qStepNew = qStepOld + stepSize*(pHalfStep);
         
         %% Please add in update to firstTerm and secondTerm as above
-        firstTerm = generateFirstTermFrom26(R, qStepNew, numberOfParticles);
-        pStepNew = pHalfStep - (stepSize/2)*(M\(firstTerm + secondTerm-M*F{n}-f_0{n}));
+        firstTerm = generateFirstTermFrom26(R, B, qStepNew, numberOfParticles);
+        pStepNew = pHalfStep - (stepSize/2)*(M\(firstTerm + secondTerm -M*F{n}-f_0{n}));
         
         p(n,:) = pStepNew;
         q(n,:) = qStepNew;
