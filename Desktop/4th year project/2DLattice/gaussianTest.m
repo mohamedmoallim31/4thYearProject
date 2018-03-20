@@ -37,23 +37,25 @@ test = zeros(1, 2*numberOfCoarseGrainParticles);
 
 for k = 1:numberOfSteps
     firstTerm = generateFirstTermFrom26(R, B, q(k,:),n);
-    test(k,:) = transpose(firstTerm - M*transpose(deriv(k,:))); 
+    test(k,:) = transpose(firstTerm + M*transpose(deriv(k,:))); 
 end
 
 sampleSize = floor(numberOfSteps/100);
-significanceLevel = 0.01;
-xsample = datasample(test(:,3), sampleSize);
-ysample = datasample(test(:,4), sampleSize);
+significanceLevel = 0.10;
+xsample = datasample(test(:,5), sampleSize);
+ysample = datasample(test(:,6), sampleSize);
 %draw histogram
 ax1 = subplot(2,1,1);
 histogram(xsample, binNo(sampleSize, significanceLevel));
 %fit bell curve to data
-histfit(xsample);
+title('\textbf{Histogram Of Sample For x positions}','Interpreter','latex')
+
 
 ax2 = subplot(2,1,2);
 histogram(ysample, binNo(sampleSize, significanceLevel));
 %fit bell curve to data
-histfit(ysample);
+title('\textbf{Histogram Of Sample For y positions}','Interpreter','latex')
+
 
 myChiSquaredTest(xsample, sampleSize);
 myChiSquaredTest(ysample, sampleSize);

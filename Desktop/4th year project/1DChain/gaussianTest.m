@@ -38,8 +38,8 @@ end
 R = generateR(B, numberOfParticles);
 test = zeros(1, numberOfCoarseGrainParticles);
 for k = 1:numberOfSteps
-    firstTerm = generateFirstTermFrom26(R, transpose(q(k,:)), numberOfParticles);
-    test(k,:) = transpose(firstTerm - M*B*transpose(deriv(k,:)));
+    firstTerm = generateFirstTermFrom26(R, B, transpose(q(k,:)), numberOfParticles);
+    test(k,:) = transpose(firstTerm + M*B*transpose(deriv(k,:)));
 end
 
 

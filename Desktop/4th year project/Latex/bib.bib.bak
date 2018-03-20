@@ -85,4 +85,30 @@
   editor    = {Stuart Antman Philip Holmes K.R. Sreenivasan},
 }
 
+@Book{Scherer2015,
+  title     = {Computational physics},
+  publisher = {Springer},
+  year      = {2015},
+  author    = {Scherer, Philipp OJ},
+}
+
+@Book{Leimkuhler2004,
+  title     = {Simulating hamiltonian dynamics},
+  publisher = {Cambridge university press},
+  year      = {2004},
+  author    = {Leimkuhler, Benedict and Reich, Sebastian},
+  volume    = {14},
+}
+
+@Article{Macedo2013,
+  author    = {Macedo, Hugo Daniel and Oliveira, Jos{\'e} Nuno},
+  title     = {Typing linear algebra: A biproduct-oriented approach},
+  journal   = {Science of Computer Programming},
+  year      = {2013},
+  volume    = {78},
+  number    = {11},
+  pages     = {2160--2191},
+  publisher = {Elsevier},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}
